@@ -212,6 +212,7 @@ const ServiceItem = ({
                     <Button
                       variant="default"
                       className="w-full"
+                      disabled={!hour || !date}
                     >
                       Confirmar reserva
                     </Button>
