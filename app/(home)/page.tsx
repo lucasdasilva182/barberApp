@@ -34,7 +34,9 @@ export default async function Home() {
       <Header />
 
       <div className="p-5">
-        <h2 className="text-xl font-bold">Olá, Lucas</h2>
+        <h2 className="text-xl font-bold">
+          {session?.user ? `Olá, ${session.user.name?.split(' ')[0]}` : 'Olá!'}
+        </h2>
         <p className="capitalize text-sm">
           {format(new Date(), "EEEE',' dd 'de' MMMM", {
             locale: ptBR,
