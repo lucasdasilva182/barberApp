@@ -60,7 +60,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
   };
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger asChild className="cursor-pointer">
         <Card className="min-w-full">
           <CardContent className="flex items-center p-0">
             <div className="flex flex-col gap-2 p-5 flex-[3]">
