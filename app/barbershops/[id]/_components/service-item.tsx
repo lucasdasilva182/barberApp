@@ -1,10 +1,7 @@
 'use client';
 import { Button } from '@/app/_components/ui/button';
 import { Calendar } from '@/app/_components/ui/calendar';
-import {
-  Card,
-  CardContent,
-} from '@/app/_components/ui/card';
+import { Card, CardContent } from '@/app/_components/ui/card';
 import {
   Sheet,
   SheetContent,
@@ -13,11 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/app/_components/ui/sheet';
-import {
-  Barbershop,
-  Booking,
-  Service,
-} from '@prisma/client';
+import { Barbershop, Booking, Service } from '@prisma/client';
 import { ptBR } from 'date-fns/locale';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -29,6 +22,7 @@ import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { getDayBookings } from '../actions/get-day-bookings';
+import BookingInfo from '@/app/_components/booking-info';
 
 interface ServiceItemProps {
   barbershop: Barbershop;
@@ -44,16 +38,11 @@ const ServiceItem = ({
   const router = useRouter();
   const { data } = useSession();
 
-  const [date, setDate] = useState<Date | undefined>(
-    undefined
-  );
+  const [date, setDate] = useState<Date | undefined>(undefined);
   const [hour, setHour] = useState<string | undefined>();
-  const [submitIsLoading, setSubmitIsLoading] =
-    useState(false);
+  const [submitIsLoading, setSubmitIsLoading] = useState(false);
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
-  const [dayBookings, setDayBookings] = useState<Booking[]>(
-    []
-  );
+  const [dayBookings, setDayBookings] = useState<Booking[]>([]);
 
   const handleBookingClick = () => {
     if (!isAuthenticated) {
@@ -71,10 +60,7 @@ const ServiceItem = ({
       const dateHour = Number(hour.split(':')[0]);
       const dateMinutes = Number(hour.split(':')[1]);
 
-      const newDate = setMinutes(
-        setHours(date, dateHour),
-        dateMinutes
-      );
+      const newDate = setMinutes(setHours(date, dateHour), dateMinutes);
 
       await SaveBooking({
         serviceId: service.id,
@@ -87,11 +73,9 @@ const ServiceItem = ({
       setHour(undefined);
       setDate(undefined);
       toast('Reserva realizada com sucesso!', {
-        description: format(
-          newDate,
-          "'Para' dd 'de' MMMM 'às' HH':'mm'.'",
-          { locale: ptBR }
-        ),
+        description: format(newDate, "'Para' dd 'de' MMMM 'às' HH':'mm'.'", {
+          locale: ptBR,
+        }),
         action: {
           label: 'Visualizar',
           onClick: () => router.push('/bookings'),
@@ -110,10 +94,7 @@ const ServiceItem = ({
     }
 
     const refreshAvailableHours = async () => {
-      const _dayBookings = await getDayBookings(
-        barbershop.id,
-        date
-      );
+      const _dayBookings = await getDayBookings(barbershop.id, date);
 
       setDayBookings(_dayBookings);
     };
@@ -143,10 +124,7 @@ const ServiceItem = ({
         const bookingHour = booking.date.getHours();
         const bookingMinutes = booking.date.getMinutes();
 
-        return (
-          bookingHour === timeHour &&
-          bookingMinutes === timeMinutes
-        );
+        return bookingHour === timeHour && bookingMinutes === timeMinutes;
       });
 
       if (!booking) {
@@ -175,9 +153,7 @@ const ServiceItem = ({
 
           <div className="flex flex-col w-full">
             <h2 className="font-bold">{service.name}</h2>
-            <p className="text-sm text-gray-400">
-              {service.description}
-            </p>
+            <p className="text-sm text-gray-400">{service.description}</p>
 
             <div className="flex items-center justify-between mt-2">
               <p className="text-primary text-sm font-bold">
@@ -187,15 +163,9 @@ const ServiceItem = ({
                 }).format(Number(service.price))}
               </p>
 
-              <Sheet
-                open={sheetIsOpen}
-                onOpenChange={setSheetIsOpen}
-              >
+              <Sheet open={sheetIsOpen} onOpenChange={setSheetIsOpen}>
                 <SheetTrigger asChild>
-                  <Button
-                    variant="secondary"
-                    onClick={handleBookingClick}
-                  >
+                  <Button variant="secondary" onClick={handleBookingClick}>
                     Agendar
                   </Button>
                 </SheetTrigger>
@@ -243,15 +213,9 @@ const ServiceItem = ({
                       {timeList.map((time) => (
                         <Button
                           key={time}
-                          variant={
-                            hour === time
-                              ? 'default'
-                              : 'outline'
-                          }
+                          variant={hour === time ? 'default' : 'outline'}
                           className="mb-2 rounded-full"
-                          onClick={() =>
-                            handleHourClick(time)
-                          }
+                          onClick={() => handleHourClick(time)}
                         >
                           {time}
                         </Button>
@@ -259,65 +223,26 @@ const ServiceItem = ({
                     </div>
                   )}
 
-                  <div className="py-6 px-5 border-t border-solid border-secondary">
-                    <Card>
-                      <CardContent className="p-3 flex flex-col gap-3">
-                        <div className="flex justify-between">
-                          <h2 className="font-bold text-sm">
-                            {service.name}
-                          </h2>
-                          <h3 className="font-bold">
-                            {Intl.NumberFormat('pt-BR', {
-                              style: 'currency',
-                              currency: 'BRL',
-                            }).format(
-                              Number(service.price)
-                            )}
-                          </h3>
-                        </div>
-                        {date && (
-                          <div className="flex justify-between">
-                            <h3 className="text-gray-400 text-sm">
-                              Data:
-                            </h3>
-                            <h4 className="text-sm">
-                              {format(
-                                date,
-                                "dd 'de' MMMM",
-                                { locale: ptBR }
-                              )}
-                            </h4>
-                          </div>
-                        )}
-                        {hour && (
-                          <div className="flex justify-between">
-                            <h3 className="text-gray-400 text-sm">
-                              Horário:
-                            </h3>
-                            <h4 className="text-sm">
-                              {hour}
-                            </h4>
-                          </div>
-                        )}
-
-                        <div className="flex justify-between">
-                          <h3 className="text-gray-400 text-sm">
-                            Barbearia:
-                          </h3>
-                          <h4 className="text-sm">
-                            {barbershop.name}
-                          </h4>
-                        </div>
-                      </CardContent>
-                    </Card>
+                  <div className="px-5 pb-5">
+                    <BookingInfo
+                      booking={{
+                        barbershop: barbershop,
+                        date:
+                          date && hour
+                            ? setMinutes(
+                                setHours(date, Number(hour.split(':')[0])),
+                                Number(hour.split(':')[1])
+                              )
+                            : undefined,
+                        service: service,
+                      }}
+                    />
                   </div>
                   <SheetFooter className="px-5">
                     <Button
                       variant="default"
                       className="w-full"
-                      disabled={
-                        !hour || !date || submitIsLoading
-                      }
+                      disabled={!hour || !date || submitIsLoading}
                       onClick={handleBookingSubmit}
                     >
                       {submitIsLoading && (
