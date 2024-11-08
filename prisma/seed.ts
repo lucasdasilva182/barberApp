@@ -27,6 +27,7 @@ async function seedDatabase() {
       'https://utfs.io/f/07842cfb-7b30-4fdc-accc-719618dfa1f2-17s.png',
       'https://utfs.io/f/0522fdaf-0357-4213-8f52-1d83c3dcb6cd-18e.png',
     ];
+
     // Nomes criativos para as barbearias
     const creativeNames = [
       'Barbearia Vintage',
@@ -58,50 +59,39 @@ async function seedDatabase() {
     const services = [
       {
         name: 'Corte de Cabelo',
-        description:
-          'Estilo personalizado com as últimas tendências.',
+        description: 'Estilo personalizado com as últimas tendências.',
         price: 60.0,
-        imageUrl:
-          'https://utfs.io/f/0ddfbd26-a424-43a0-aaf3-c3f1dc6be6d1-1kgxo7.png',
+        imageUrl: 'https://utfs.io/f/0ddfbd26-a424-43a0-aaf3-c3f1dc6be6d1-1kgxo7.png',
       },
       {
         name: 'Barba',
-        description:
-          'Modelagem completa para destacar sua masculinidade.',
+        description: 'Modelagem completa para destacar sua masculinidade.',
         price: 40.0,
-        imageUrl:
-          'https://utfs.io/f/e6bdffb6-24a9-455b-aba3-903c2c2b5bde-1jo6tu.png',
+        imageUrl: 'https://utfs.io/f/e6bdffb6-24a9-455b-aba3-903c2c2b5bde-1jo6tu.png',
       },
       {
         name: 'Pézinho',
-        description:
-          'Acabamento perfeito para um visual renovado.',
+        description: 'Acabamento perfeito para um visual renovado.',
         price: 35.0,
-        imageUrl:
-          'https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png',
+        imageUrl: 'https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png',
       },
       {
         name: 'Sobrancelha',
-        description:
-          'Expressão acentuada com modelagem precisa.',
+        description: 'Expressão acentuada com modelagem precisa.',
         price: 20.0,
-        imageUrl:
-          'https://utfs.io/f/2118f76e-89e4-43e6-87c9-8f157500c333-b0ps0b.png',
+        imageUrl: 'https://utfs.io/f/2118f76e-89e4-43e6-87c9-8f157500c333-b0ps0b.png',
       },
       {
         name: 'Massagem',
         description: 'Relaxe com uma massagem revigorante.',
         price: 50.0,
-        imageUrl:
-          'https://utfs.io/f/c4919193-a675-4c47-9f21-ebd86d1c8e6a-4oen2a.png',
+        imageUrl: 'https://utfs.io/f/c4919193-a675-4c47-9f21-ebd86d1c8e6a-4oen2a.png',
       },
       {
         name: 'Hidratação',
-        description:
-          'Hidratação profunda para cabelo e barba.',
+        description: 'Hidratação profunda para cabelo e barba.',
         price: 25.0,
-        imageUrl:
-          'https://utfs.io/f/c4919193-a675-4c47-9f21-ebd86d1c8e6a-4oen2a.png',
+        imageUrl: 'https://utfs.io/f/8a457cda-f768-411d-a737-cdb23ca6b9b5-b3pegf.png',
       },
     ];
 
@@ -117,9 +107,25 @@ async function seedDatabase() {
           name,
           address,
           imageUrl: imageUrl,
+          phones: ['(11) 99999-9999', '(11) 99999-9999'],
+          description:
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ac augue ullamcorper, pharetra orci mollis, auctor tellus. Phasellus pharetra erat ac libero efficitur tempus. Donec pretium convallis iaculis. Etiam eu felis sollicitudin, cursus mi vitae, iaculis magna. Nam non erat neque. In hac habitasse platea dictumst. Pellentesque molestie accumsan tellus id laoreet.',
         },
       });
 
+      // Criar barbeiros para cada barbearia
+      for (let j = 0; j < 3; j++) {
+        // Adicionar 3 barbeiros por barbearia
+        await prisma.barber.create({
+          data: {
+            name: `Barbeiro ${j + 1} - ${name}`,
+            image: images[(i + j) % images.length], // Imagem associada a cada barbeiro
+            barbershopId: barbershop.id, // Associar o barbeiro à barbearia
+          },
+        });
+      }
+
+      // Criar serviços para cada barbearia
       for (const service of services) {
         await prisma.service.create({
           data: {

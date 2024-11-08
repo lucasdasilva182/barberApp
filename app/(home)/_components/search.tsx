@@ -1,13 +1,7 @@
 'use client';
 
 import { Button } from '@/app/_components/ui/button';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from '@/app/_components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormMessage } from '@/app/_components/ui/form';
 import { Input } from '@/app/_components/ui/input';
 import { SearchIcon } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -17,6 +11,7 @@ import { useRouter } from 'next/navigation';
 
 interface SearchProps {
   defaultValues?: z.infer<typeof formSchema>;
+  customClass?: String;
 }
 
 const formSchema = z.object({
@@ -28,7 +23,7 @@ const formSchema = z.object({
     .min(1, 'Campo obrigatório'),
 });
 
-const Search = ({ defaultValues }: SearchProps) => {
+const Search = ({ defaultValues, customClass }: SearchProps) => {
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -40,12 +35,9 @@ const Search = ({ defaultValues }: SearchProps) => {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className={`flex items-center gap-2 ${customClass}`}>
       <Form {...form}>
-        <form
-          className="flex w-full gap-4"
-          onSubmit={form.handleSubmit(handleSubmit)}
-        >
+        <form className="flex w-full gap-4" onSubmit={form.handleSubmit(handleSubmit)}>
           <FormField
             control={form.control}
             name="search"

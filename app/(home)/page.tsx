@@ -11,89 +11,84 @@ import { authOptions } from '../_lib/auth';
 export default async function Home() {
   const session = await getServerSession(authOptions);
 
-  const [barbershops, recomendenBarbershops, confirmedBookings] =
-    await Promise.all([
-      db.barbershop.findMany({}),
-      db.barbershop.findMany({
-        orderBy: {
-          id: 'asc',
-        },
-      }),
-      session?.user
-        ? await db.booking.findMany({
-            where: {
-              userId: (session.user as any).id,
-              date: {
-                gte: new Date(),
-              },
+  const [barbershops, recomendenBarbershops, confirmedBookings] = await Promise.all([
+    db.barbershop.findMany({}),
+    db.barbershop.findMany({
+      orderBy: {
+        id: 'asc',
+      },
+    }),
+    session?.user
+      ? await db.booking.findMany({
+          where: {
+            userId: (session.user as any).id,
+            date: {
+              gte: new Date(),
             },
-            include: {
-              service: true,
-              barbershop: true,
-            },
-          })
-        : Promise.resolve([]),
-    ]);
+          },
+          include: {
+            service: true,
+            barbershop: true,
+          },
+        })
+      : Promise.resolve([]),
+  ]);
 
   return (
     <div>
       <Header />
 
-      <div className="p-5">
-        <h2 className="text-xl font-bold">
-          {session?.user ? `Olá, ${session.user.name?.split(' ')[0]}` : 'Olá!'}
-        </h2>
-        <p className="capitalize text-sm">
-          {format(new Date(), "EEEE',' dd 'de' MMMM", {
-            locale: ptBR,
-          })}
-        </p>
-      </div>
-
-      <div className="px-5 mt-6">
-        <Search />
-      </div>
-
-      {confirmedBookings.length > 0 && (
-        <>
-          <div className="mt-6">
-            <h2 className="pl-5 text-xs uppercase text-grey-400 font-bold mb-3">
-              Agendamentos
-            </h2>
-            <div className="px-5 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-              {confirmedBookings.map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
-              ))}
-            </div>
-          </div>
-        </>
-      )}
-
-      <div className="mt-6">
-        <h2 className="px-5 text-xs uppercase text-grey-400 font-bold mb-3">
-          Recomendados
-        </h2>
-
-        <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {barbershops.map((barbershop) => (
-            <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
-              <BarbershopItem barbershop={barbershop} />
-            </div>
-          ))}
+      <div className="container pt-20">
+        <div className="p-5">
+          <h2 className="text-xl font-bold">
+            {session?.user ? `Olá, ${session.user.name?.split(' ')[0]}` : 'Olá!'}
+          </h2>
+          <p className="capitalize text-sm">
+            {format(new Date(), "EEEE',' dd 'de' MMMM", {
+              locale: ptBR,
+            })}
+          </p>
         </div>
-      </div>
 
-      <div className="mt-6">
-        <h2 className="px-5 text-xs uppercase text-grey-400 font-bold mb-3">
-          Populares
-        </h2>
+        <div className="px-0 mt-6">
+          <Search />
+        </div>
 
-        <div className="flex px-5 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
-          {recomendenBarbershops.map((barbershop) => (
-            <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
-              <BarbershopItem barbershop={barbershop} />
+        {confirmedBookings.length > 0 && (
+          <>
+            <div className="mt-6">
+              <h2 className="pl-5 text-xs uppercase text-grey-400 font-bold mb-3">Agendamentos</h2>
+              <div className="px-0 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+                {confirmedBookings.map((booking) => (
+                  <BookingItem key={booking.id} booking={booking} />
+                ))}
+              </div>
             </div>
-          ))}
+          </>
+        )}
+
+        <div className="mt-6">
+          <h2 className="px-0 text-xs uppercase text-grey-400 font-bold mb-3">Recomendados</h2>
+
+          <div className="flex px-0 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+            {barbershops.map((barbershop) => (
+              <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
+                <BarbershopItem barbershop={barbershop} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h2 className="px-0 text-xs uppercase text-grey-400 font-bold mb-3">Populares</h2>
+
+          <div className="flex px-0 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+            {recomendenBarbershops.map((barbershop) => (
+              <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
+                <BarbershopItem barbershop={barbershop} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
