@@ -1,14 +1,13 @@
 import { db } from '@/app/_lib/prisma';
 import BarbershopInfo from './_components/barbershop-info';
 import ServiceItem from './_components/service-item';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/_lib/auth';
 import Header from '@/app/_components/header';
 import PhoneItem from '@/app/_components/phone-item';
 import { Card, CardContent } from '@/app/_components/ui/card';
 import Image from 'next/image';
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/_components/ui/avatar';
 import { Separator } from '@/app/_components/ui/separator';
+import { currentUser } from '@/app/_lib/auth';
 
 interface BarbershopDetailsPageProps {
   params: {
@@ -17,7 +16,7 @@ interface BarbershopDetailsPageProps {
 }
 
 const BarbershopDetailsPage = async ({ params }: BarbershopDetailsPageProps) => {
-  const session = await getServerSession(authOptions);
+  const session = await currentUser();
 
   if (!params.id) {
     // TODO redirecionar para home
@@ -26,7 +25,7 @@ const BarbershopDetailsPage = async ({ params }: BarbershopDetailsPageProps) => 
 
   const barbershop = await db.barbershop.findUnique({
     where: { id: params.id },
-    include: { services: true },
+    include: { services: true, barbers: true },
   });
 
   if (!barbershop) {

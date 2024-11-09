@@ -3,17 +3,26 @@
 import Image from 'next/image';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
-import { Calendar, LogInIcon, MenuIcon } from 'lucide-react';
+import { Calendar, LogInIcon, LogOut, MenuIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import SideMenu from './side-menu';
 import Link from 'next/link';
-import { signIn, useSession } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import Search from '../(home)/_components/search';
 import { usePathname } from 'next/navigation';
-import { Avatar, AvatarImage } from './ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { FaUser } from 'react-icons/fa';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
 
 const Header = () => {
-  const handleLoginClick = () => signIn();
+  const handleLogout = () => {
+    signOut();
+  };
   const pathname = usePathname();
   const { data } = useSession();
 
@@ -31,7 +40,7 @@ const Header = () => {
             </div>
           )}
 
-          <div className="hidden md:flex gap-6">
+          <div className="hidden md:flex gap-2">
             <Button asChild variant="ghost" className="justify-start gap-2">
               <Link href="/bookings">
                 <Calendar size={16} />
@@ -41,17 +50,31 @@ const Header = () => {
             {data?.user ? (
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3 ">
-                  <Avatar>
-                    <AvatarImage src={data.user?.image ?? ''} />
-                  </Avatar>
-                  <h2 className="font-bold">{data.user.name}</h2>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="outline-none">
+                      <Avatar>
+                        <AvatarImage src={data.user?.image ?? ''} />
+                        <AvatarFallback className="bg-foreground">
+                          <FaUser className="text-background" />
+                        </AvatarFallback>
+                      </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-40 z-[110]" align="end">
+                      <DropdownMenuItem className="gap-2" onClick={handleLogout}>
+                        <LogOut size={18} />
+                        Logout
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </div>
             ) : (
-              <Button className="w-full justify-start" onClick={handleLoginClick}>
-                <LogInIcon className="mr-2" size={16} />
-                Login
-              </Button>
+              <Link href="/login">
+                <Button className="w-full justify-start">
+                  <LogInIcon className="mr-2" size={16} />
+                  Login
+                </Button>
+              </Link>
             )}
           </div>
 

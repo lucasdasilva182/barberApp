@@ -5,11 +5,10 @@ import Search from './_components/search';
 import BookingItem from '../_components/booking-item';
 import { db } from '../_lib/prisma';
 import BarbershopItem from './_components/barbershop-item';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../_lib/auth';
+import { currentUser } from '@/app/_lib/auth';
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  const session = await currentUser();
 
   const [barbershops, recomendenBarbershops, confirmedBookings] = await Promise.all([
     db.barbershop.findMany({}),

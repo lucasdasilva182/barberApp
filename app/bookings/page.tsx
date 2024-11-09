@@ -1,15 +1,14 @@
-import { getServerSession } from 'next-auth';
 import Header from '../_components/header';
 import { redirect } from 'next/navigation';
 import { db } from '../_lib/prisma';
 import BookingItem from '../_components/booking-item';
-import { authOptions } from '../_lib/auth';
+import { currentUser } from '../_lib/auth';
 
 const BookingsPage = async () => {
-  const session = await getServerSession(authOptions);
+  const session = await await currentUser();
 
   if (!session?.user) {
-    return redirect('/');
+    return redirect('/login');
   }
 
   const [confirmedBookings, finishedBookings] = await Promise.all([
@@ -46,9 +45,7 @@ const BookingsPage = async () => {
         <h1 className="text-xl font-bold">Agendamentos</h1>
 
         {confirmedBookings.length > 0 && (
-          <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">
-            Confirmados
-          </h2>
+          <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">Confirmados</h2>
         )}
 
         <div className="flex flex-col gap-3">
@@ -58,9 +55,7 @@ const BookingsPage = async () => {
         </div>
 
         {finishedBookings.length > 0 && (
-          <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">
-            Finalizados
-          </h2>
+          <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">Finalizados</h2>
         )}
 
         <div className="flex flex-col gap-3">

@@ -16,6 +16,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  password      String?
   accounts      Account[]
   sessions      Session[]
   bookings      Booking[]
@@ -106,9 +107,10 @@ model Session {
 }
 
 model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+  id        String                  @id @default(cuid())
+  email     String
+  token     String                  @unique
+  expires   DateTime
 
-  @@unique([identifier, token])
+  @@unique([email, token])
 }
