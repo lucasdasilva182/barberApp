@@ -28,6 +28,7 @@ export default async function Home() {
           include: {
             service: true,
             barbershop: true,
+            barber: true,
           },
         })
       : Promise.resolve([]),

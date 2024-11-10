@@ -5,6 +5,7 @@ import { revalidatePath } from 'next/cache';
 
 interface SaveBookingParams {
   barbershopId: string;
+  barberId?: string;
   serviceId: string;
   date: Date;
   userId: string;
@@ -17,6 +18,7 @@ export const SaveBooking = async (params: SaveBookingParams) => {
       userId: params.userId,
       date: params.date,
       barbershopId: params.barbershopId,
+      barberId: params.barberId ? params.barberId : '',
     },
   });
 

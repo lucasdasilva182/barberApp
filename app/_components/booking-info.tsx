@@ -5,20 +5,29 @@ import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Pencil } from 'lucide-react';
 import { Separator } from './ui/separator';
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 interface BookingInfoProps {
   booking: Partial<Pick<Booking, 'date'>> & {
     service: Pick<Service, 'name' | 'price'>;
     barbershop: Pick<Barbershop, 'name'>;
-    barbers: Pick<Barber, 'name'>;
+    // barber: Barber | undefined;
+    barber: Barber | undefined;
   };
-  onOpenBarberSheet: () => void;
+  onOpenBarberSheet?: () => void;
 }
 
-interface ChildComponentProps {}
-
 const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
-  console.log(booking);
+  // console.log(booking);
+  const actualRoute = usePathname();
+  const [isBooking, setIsBooking] = useState(false);
+
+  useEffect(() => {
+    if (actualRoute.includes('booking')) {
+      setIsBooking(true);
+    }
+  }, [actualRoute]);
 
   return (
     <Card>
@@ -53,15 +62,21 @@ const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
         <div className="flex flex-col  pt-3">
           <Separator />
           <div className="flex items-center justify-between pt-3">
-            <div className="flex gap-2">
-              <h3 className="text-gray-400 text-sm">Funcionário:</h3>
-              <h4 className="text-sm">
-                {booking.barbers ? booking.barbers.name : 'Sem preferência'}
-              </h4>
+            <div className="flex gap-2 justify-between w-full items-center">
+              <div className="flex gap-2">
+                <h3 className="text-gray-400 text-sm">Funcionário:</h3>
+                <h4 className="text-sm">
+                  {booking.barber ? booking.barber.name : 'Sem preferência'}
+                </h4>
+              </div>
+              {!isBooking && (
+                <>
+                  <Button variant="ghost" type="button" onClick={onOpenBarberSheet}>
+                    <Pencil size={16} />
+                  </Button>
+                </>
+              )}
             </div>
-            <Button variant="ghost" type="button" onClick={onOpenBarberSheet}>
-              <Pencil size={16} />
-            </Button>
           </div>
         </div>
       </CardContent>

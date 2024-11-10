@@ -39,6 +39,7 @@ interface BookingItemProps {
     include: {
       service: true;
       barbershop: true;
+      barber: true;
     };
   }>;
 }

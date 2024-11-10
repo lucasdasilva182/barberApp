@@ -5,7 +5,7 @@ import BookingItem from '../_components/booking-item';
 import { currentUser } from '../_lib/auth';
 
 const BookingsPage = async () => {
-  const session = await await currentUser();
+  const session = await currentUser();
 
   if (!session?.user) {
     return redirect('/login');
@@ -22,6 +22,7 @@ const BookingsPage = async () => {
       include: {
         service: true,
         barbershop: true,
+        barber: true,
       },
     }),
     db.booking.findMany({
@@ -34,6 +35,7 @@ const BookingsPage = async () => {
       include: {
         service: true,
         barbershop: true,
+        barber: true,
       },
     }),
   ]);
@@ -41,8 +43,16 @@ const BookingsPage = async () => {
   return (
     <>
       <Header />
-      <div className="px-5 py-6">
+      <div className="container px-5 py-6 pt-[6.5rem]">
         <h1 className="text-xl font-bold">Agendamentos</h1>
+
+        {confirmedBookings.length == 0 && (
+          <div className="flex w-full">
+            <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">
+              Nenhum agendamento encontrado.
+            </h2>
+          </div>
+        )}
 
         {confirmedBookings.length > 0 && (
           <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">Confirmados</h2>

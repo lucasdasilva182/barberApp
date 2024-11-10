@@ -10,7 +10,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/app/_components/ui/sheet';
-import { Barbershop as PrismaBarbershop, Booking, Service } from '@prisma/client';
+import { Barbershop as PrismaBarbershop, Booking, Service, Barber } from '@prisma/client';
 import { ptBR } from 'date-fns/locale';
 import { signIn, useSession } from 'next-auth/react';
 import Image from 'next/image';
@@ -27,11 +27,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/app/_components/ui/avatar
 import { FaUser } from 'react-icons/fa';
 
 interface Barbershop extends PrismaBarbershop {
-  barbers: { id: string; name: string; image: string }[];
+  barbers: { id: string; name: string; image: string | null; barbershopId: string }[];
 }
 
 interface ServiceItemProps {
   barbershop: Barbershop;
+  barber: Barber;
   service: Service;
   isAuthenticated: boolean;
 }
@@ -45,15 +46,15 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
   const [submitIsLoading, setSubmitIsLoading] = useState(false);
   const [sheetIsOpen, setSheetIsOpen] = useState(false);
   const [dayBookings, setDayBookings] = useState<Booking[]>([]);
-  const [selectedBarber, setSelectedBarber] = useState({});
+  const [selectedBarber, setSelectedBarber] = useState<Barber | undefined>();
   const [isBarberSheetOpen, setIsBarberSheetOpen] = useState(false);
 
   const openBarberSheet = () => setIsBarberSheetOpen(true);
   const closeBarberSheet = () => setIsBarberSheetOpen(false);
 
-  const handleSelectBarber = (barber) => {
-    console.log(barber);
+  const handleSelectBarber = (barber: Barber) => {
     setSelectedBarber(barber);
+    closeBarberSheet();
   };
 
   const handleBookingClick = () => {
@@ -77,6 +78,7 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
       await SaveBooking({
         serviceId: service.id,
         barbershopId: barbershop.id,
+        barberId: selectedBarber?.id,
         date: newDate,
         userId: (data.user as any).id,
       });
@@ -239,7 +241,7 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
                     <BookingInfo
                       booking={{
                         barbershop: barbershop,
-                        barbers: selectedBarber,
+                        barber: selectedBarber,
                         date:
                           date && hour
                             ? setMinutes(
@@ -276,7 +278,7 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
                       <Button
                         key={barber.id}
                         variant="outline"
-                        className="w-full p-4 flex gap-4 h-auto justify-start"
+                        className={'w-full p-4 flex gap-4 h-auto justify-start'}
                         onClick={() => handleSelectBarber(barber)}
                       >
                         <Avatar>
