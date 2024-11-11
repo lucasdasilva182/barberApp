@@ -2,7 +2,7 @@
 
 import { newVerification } from '@/app/_actions/new-verification';
 import { useSearchParams } from 'next/navigation';
-import { SetStateAction, useCallback, useEffect, useState } from 'react';
+import { SetStateAction, Suspense, useCallback, useEffect, useState } from 'react';
 import { BeatLoader } from 'react-spinners';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/app/_components/ui/card';
 import { BackButton } from '@/app/_components/auth/back-button';
@@ -40,21 +40,23 @@ const NewVerificationPage = () => {
   }, [onSubmit]);
 
   return (
-    <Card className="flex flex-col justify-center items-center p-5">
-      <Card className="flex flex-col">
-        <CardTitle className="px-5 pt-5">Criar um conta</CardTitle>
-        <CardContent className="flex flex-col gap-3">
-          <div className="flex items-center justify-center w-full">
-            {!success && !error && <BeatLoader />}
-            <FormSuccess message={success} />
-            {!success && <FormError message={error} />}
-          </div>
-        </CardContent>
-        <CardFooter>
-          <BackButton label={'Voltar ao login'} href={'/login'} />
-        </CardFooter>
+    <Suspense fallback={<div>Carregando...</div>}>
+      <Card className="flex flex-col justify-center items-center p-5">
+        <Card className="flex flex-col">
+          <CardTitle className="px-5 pt-5">Criar um conta</CardTitle>
+          <CardContent className="flex flex-col gap-3">
+            <div className="flex items-center justify-center w-full">
+              {!success && !error && <BeatLoader />}
+              <FormSuccess message={success} />
+              {!success && <FormError message={error} />}
+            </div>
+          </CardContent>
+          <CardFooter>
+            <BackButton label={'Voltar ao login'} href={'/login'} />
+          </CardFooter>
+        </Card>
       </Card>
-    </Card>
+    </Suspense>
   );
 };
 
