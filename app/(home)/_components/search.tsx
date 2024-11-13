@@ -17,10 +17,10 @@ interface SearchProps {
 const formSchema = z.object({
   search: z
     .string({
-      required_error: 'Campo obrigatório',
+      required_error: '',
     })
     .trim()
-    .min(1, 'Campo obrigatório'),
+    .min(1, ''),
 });
 
 const Search = ({ defaultValues, customClass }: SearchProps) => {

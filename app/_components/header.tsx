@@ -18,6 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import { useEffect, useState } from 'react';
 
 const Header = () => {
   const handleLogout = () => {
@@ -26,9 +27,18 @@ const Header = () => {
   const pathname = usePathname();
   const { data } = useSession();
 
+  const [search, setSearch] = useState<string>('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const searchParams = new URLSearchParams(window.location.search);
+      setSearch(searchParams.get('search') || '');
+    }
+  }, []);
+
   return (
     <header className="fixed w-full z-[100]">
-      <Card>
+      <Card className="rounded-none">
         <CardContent className="container p-5 justify-between flex flex-row items-center gap-6">
           <Link href={'/'} className="w-[120px]">
             <Image src="/logo.png" alt="Logo" height={22} width={120} />
@@ -36,7 +46,7 @@ const Header = () => {
 
           {pathname != '/' && (
             <div className="hidden md:flex">
-              <Search customClass={'w-full'} />
+              <Search defaultValues={{ search: search }} customClass={'w-full'} />
             </div>
           )}
 
@@ -87,7 +97,7 @@ const Header = () => {
                 </Button>
               </SheetTrigger>
 
-              <SheetContent className="p-0">
+              <SheetContent className="p-0 overflow-y-auto">
                 <SideMenu />
               </SheetContent>
             </Sheet>

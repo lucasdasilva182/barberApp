@@ -36,7 +36,7 @@ const BarbershopDetailsPage = async ({ params }: BarbershopDetailsPageProps) => 
   return (
     <div>
       <Header />
-      <div className="pt-32 container grid grid-cols-[70%_30%] gap-6 w-full">
+      <div className="pt-24 md:pt-32 container flex flex-col md:grid md:grid-cols-[70%_30%] gap-6 w-full">
         <div>
           <BarbershopInfo barbershop={barbershop} />
 
@@ -59,7 +59,7 @@ const BarbershopDetailsPage = async ({ params }: BarbershopDetailsPageProps) => 
         </div>
 
         {/* CONTATO */}
-        <Card>
+        <Card className="hidden md:flex">
           <CardContent className="flex flex-col gap-6 w-full pt-6">
             <div className="relative h-[180px] w-full">
               <Image src="/barbershop-map.png" fill alt={barbershop.name} />

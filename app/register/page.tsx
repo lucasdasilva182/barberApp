@@ -21,6 +21,7 @@ import { FormError } from '@/app/_components/form-error';
 import { FormSuccess } from '@/app/_components/form-success';
 import { register } from '@/app/_actions/register';
 import { useState, useTransition } from 'react';
+import Image from 'next/image';
 
 const Register = () => {
   const [error, setError] = useState<string | undefined>('');
@@ -49,78 +50,94 @@ const Register = () => {
   };
 
   return (
-    <div className="p-5 md:container">
-      <Card className="flex flex-col justify-center items-center p-5">
-        <Card className="flex flex-col">
-          <CardTitle className="px-5 pt-5">Criar um conta</CardTitle>
-          <CardContent className="flex flex-col gap-3">
-            <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="space-y-6">
-                  <>
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Nome</FormLabel>
-                          <FormControl>
-                            <Input disabled={isPending} {...field} placeholder="John Doe" />
-                          </FormControl>
-                          <FormMessage {...field} />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="email"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>E-mail</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={isPending}
-                              {...field}
-                              placeholder="john.doe@example.com"
-                              type="email"
-                            />
-                          </FormControl>
-                          <FormMessage {...field} />
-                        </FormItem>
-                      )}
-                    />
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Senha</FormLabel>
-                          <FormControl>
-                            <Input
-                              disabled={isPending}
-                              {...field}
-                              placeholder="******"
-                              type="password"
-                            />
-                          </FormControl>
-                          <FormMessage {...field} />
-                        </FormItem>
-                      )}
-                    />
-                  </>
-                </div>
-                <FormError message={error} />
-                <FormSuccess message={success} />
-                <Button disabled={isPending} type="submit" className="w-full">
-                  Criar conta
-                </Button>
-              </form>
-            </Form>
-          </CardContent>
-          <CardFooter>
-            <BackButton label={'Já tenho uma conta'} href={'/login'} />
-          </CardFooter>
-        </Card>
+    <div className="p-5 md:container flex h-full gap-20 justify-around items-center">
+      <div className=" flex w-full max-w-[348px] flex-col gap-4 items-center">
+        <div>
+          <h2 className="text-xl font-bold text-center">Crie uma conta</h2>
+          <BackButton label={'Já tenho uma conta'} href={'/login'} />
+        </div>
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
+            <div className="space-y-6">
+              <>
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Nome</FormLabel>
+                      <FormControl>
+                        <Input disabled={isPending} {...field} placeholder="John Doe" />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-mail</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isPending}
+                          {...field}
+                          placeholder="john.doe@example.com"
+                          type="email"
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Senha</FormLabel>
+                      <FormControl>
+                        <Input
+                          disabled={isPending}
+                          {...field}
+                          placeholder="******"
+                          type="password"
+                        />
+                      </FormControl>
+                      <FormMessage {...field} />
+                    </FormItem>
+                  )}
+                />
+              </>
+            </div>
+            <FormError message={error} />
+            <FormSuccess message={success} />
+            <Button disabled={isPending} type="submit" className="w-full">
+              Criar conta
+            </Button>
+          </form>
+        </Form>
+      </div>
+
+      <Card className="hidden w-full max-w-[700px] lg:block">
+        <Image
+          src="/barber-items.png"
+          style={{
+            objectFit: 'cover',
+          }}
+          width={700}
+          height={700}
+          className="rounded-2xl "
+          alt="Teste"
+        />
+        <div className="flex flex-col gap-4 p-11">
+          <Image src="/logo.png" alt="Logo" height={32} width={130} />
+          <p className="text-xl text-gray-400">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget nunc sed elit.
+            Nullam eget nunc sed elit. Nullam eget nunc
+          </p>
+        </div>
       </Card>
     </div>
   );

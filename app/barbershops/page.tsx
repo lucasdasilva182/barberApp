@@ -14,6 +14,7 @@ const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
   if (!searchParams.search) {
     redirect('/');
   }
+
   const barbershops = await db.barbershop.findMany({
     where: {
       name: {
@@ -23,29 +24,24 @@ const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
     },
   });
 
-  console.log(typeof barbershops);
-
   return (
     <>
       <Header />
 
-      <div className="px-5 py-6 flex flex-col gap-6">
-        <Search defaultValues={{ search: searchParams.search }} />
+      <div className="container px-5 py-6 pt-24 flex flex-col gap-6">
         <h1 className="text-gray-400 font-bold text-xs uppercase">
           Resultados para &quot;{searchParams.search}&quot;
         </h1>
 
-        <div className="grid grid-cols-2 mt-3 gap-4">
+        <div className="flex gap-4">
           {barbershops.map((barbershop) => (
-            <div className="min-w-full" key={barbershop.id}>
+            <div className="min-w-[167px] max-w-[167px]" key={barbershop.id}>
               <BarbershopItem barbershop={barbershop} />
             </div>
           ))}
         </div>
 
-        {barbershops.length == 0 && (
-          <p className="text-center">Nenhum resultado encontrado.</p>
-        )}
+        {barbershops.length == 0 && <p className="text-center">Nenhum resultado encontrado.</p>}
       </div>
     </>
   );

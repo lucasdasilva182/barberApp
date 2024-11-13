@@ -25,8 +25,14 @@
     --accent: 228 6% 16%;
     --accent-foreground: 210 40% 98%;
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: #ef4444;
+    --destructive-foreground: #fff;
+
+    --warning: #eab308;
+    --warning-foreground: #000;
+
+    --success: #16a34a;
+    --success-foreground: #fff;
 
     --border: 228 6% 16%;
     --input: 228 6% 16%;

@@ -184,7 +184,7 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
                   </Button>
                 </SheetTrigger>
 
-                <SheetContent className="p-0">
+                <SheetContent className="p-0 overflow-y-auto ">
                   <SheetHeader className="text-left px-5 py-6 border-b border-solid border-secondary">
                     <SheetTitle>Fazer reserva</SheetTitle>
                   </SheetHeader>
@@ -254,7 +254,7 @@ const ServiceItem = ({ service, isAuthenticated, barbershop }: ServiceItemProps)
                       onOpenBarberSheet={openBarberSheet}
                     />
                   </div>
-                  <SheetFooter className="px-5">
+                  <SheetFooter className="px-5 pb-5">
                     <Button
                       variant="default"
                       className="w-full"

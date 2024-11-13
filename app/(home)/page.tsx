@@ -38,7 +38,7 @@ export default async function Home() {
     <div>
       <Header />
 
-      <div className="container pt-20">
+      <div className="container px-5 py-6 pt-20">
         <div className="p-5">
           <h2 className="text-xl font-bold">
             {session?.user ? `Olá, ${session.user.name?.split(' ')[0]}` : 'Olá!'}

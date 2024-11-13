@@ -33,8 +33,16 @@ const config = {
           foreground: 'hsl(var(--secondary-foreground))',
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))',
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
+        },
+        warning: {
+          DEFAULT: 'var(--warning)',
+          foreground: 'var(--warning-foreground)',
+        },
+        success: {
+          DEFAULT: 'var(--success)',
+          foreground: 'var(--success-foreground)',
         },
         muted: {
           DEFAULT: 'hsl(var(--muted))',

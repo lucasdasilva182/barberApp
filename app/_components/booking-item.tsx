@@ -64,7 +64,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
       <SheetTrigger asChild className="cursor-pointer">
         <Card className="min-w-full">
           <CardContent className="flex items-center p-0">
-            <div className="flex flex-col gap-2 p-5 flex-[3]">
+            <div className="flex flex-col gap-2 p-5 flex-1 md:flex-[3]">
               <Badge variant={isBookingConfirmed ? 'default' : 'secondary'} className="w-fit">
                 {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
               </Badge>
@@ -86,7 +86,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
           </CardContent>
         </Card>
       </SheetTrigger>
-      <SheetContent className="px-0">
+      <SheetContent className="px-0 overflow-y-auto">
         <SheetHeader className="px-5 text-left pb-6 border-b border-solid border-secondary">
           <SheetTitle>Informações da Reserva</SheetTitle>
         </SheetHeader>

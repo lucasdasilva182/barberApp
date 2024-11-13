@@ -17,7 +17,7 @@ export const SettingsSchema = z
       return true;
     },
     {
-      message: 'New password is required!',
+      message: 'Nova Senha é obrigatório!',
       path: ['newPassword'],
     }
   )
@@ -30,41 +30,41 @@ export const SettingsSchema = z
       return true;
     },
     {
-      message: 'Password is required!',
+      message: 'Senha é obrigatório!',
       path: ['password'],
     }
   );
 
 export const LoginSchema = z.object({
   email: z.string().email({
-    message: 'Email is required',
+    message: 'E-mail é obrigatório',
   }),
   password: z.string().min(1, {
-    message: 'Password is required',
+    message: 'Senha é obrigatório',
   }),
   code: z.optional(z.string()),
 });
 
 export const NewPasswordSchema = z.object({
   password: z.string().min(6, {
-    message: 'Minimum 6 characters required',
+    message: 'A senha precisa de no mínimo 6 caracteres',
   }),
 });
 
 export const ResetSchema = z.object({
   email: z.string().email({
-    message: 'Email is required',
+    message: 'E-mail é obrigatório',
   }),
 });
 
 export const RegisterSchema = z.object({
   email: z.string().email({
-    message: 'Email is required',
+    message: 'E-mail é obrigatório',
   }),
   password: z.string().min(6, {
-    message: 'Minimum 6 characters required',
+    message: 'A senha precisa de no mínimo 6 caracteres',
   }),
   name: z.string().min(1, {
-    message: 'Name is required',
+    message: 'Nome é obrigatório',
   }),
 });

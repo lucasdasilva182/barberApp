@@ -71,7 +71,12 @@ const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
               </div>
               {!isBooking && (
                 <>
-                  <Button variant="ghost" type="button" onClick={onOpenBarberSheet}>
+                  <Button
+                    variant="ghost"
+                    type="button"
+                    className="h-5 w-5 p-0"
+                    onClick={onOpenBarberSheet}
+                  >
                     <Pencil size={16} />
                   </Button>
                 </>
