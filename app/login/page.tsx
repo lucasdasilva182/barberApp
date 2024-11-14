@@ -85,8 +85,8 @@ const Login = () => {
     <>
       <Header />
 
-      <div className="p-5 pt-20 md:pt-5 md:container flex h-full gap-20 justify-around items-center">
-        <div className=" flex w-full max-w-[348px] flex-col gap-4 items-center">
+      <div className="p-5 pt-28 md:pt-5 md:mt-[82px] container flex gap-10 justify-around items-center">
+        <div className=" flex w-full max-w-[348px] flex-col gap-4 items-center justify-center">
           <div>
             <h2 className="text-xl font-bold text-center">Acesse sua conta</h2>
             <BackButton label={'Não tenho uma conta'} href={'/register'} />
@@ -158,15 +158,16 @@ const Login = () => {
             </Button>
           </div>
         </div>
-        <Card className="hidden w-full max-w-[700px] lg:block">
+        <Card className="hidden w-full max-w-[500px] lg:block">
           <Image
             src="/barber-items.png"
             style={{
               objectFit: 'cover',
             }}
-            width={700}
-            height={700}
-            className="rounded-2xl "
+            layout="responsive"
+            width={500}
+            height={500}
+            className="rounded-2xl w-full h-auto"
             alt="Teste"
           />
           <div className="flex flex-col gap-4 p-11">

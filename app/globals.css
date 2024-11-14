@@ -49,4 +49,9 @@
   body {
     @apply bg-background text-foreground antialiased h-screen flex flex-col;
   }
+
+  .custom-max-height {
+    @apply overflow-auto;
+    max-height: calc(100vh - 82px);
+  }
 }
