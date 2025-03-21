@@ -1,5 +1,5 @@
 
-# **BarberApp**
+# **BarberApp ✂**
 
 Projeto feito para agendamentos de serviços em barbearias, com opções de para escolha de funcionário para o serviço, dia e horário. App completo, permite cadastro com e-mail e senha, ou login com google, agendamento e cancelamento de serviços, além de outras features.
 
