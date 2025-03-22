@@ -14,7 +14,7 @@ Projeto feito para agendamentos de serviços em barbearias, construído com **Ne
 
 ## **Demo**
 
-A demo pode ser acessado através do [link](https://barber-app-eta-one.vercel.app/).  
+A demo pode ser acessado através do [link](https://barber-app-eta-one.vercel.app/)
   
 <br>
   
