@@ -3,11 +3,12 @@
 
 Projeto feito para agendamentos de serviços em barbearias, construído com **Next.js**, **Prisma** e com banco de dados **PostgreSQL**.
 
-Funcionalidades
-✅ Autenticação com credenciais (e-mail e senha)
-✅ Login via OAuth (Google)
-✅ Agendamento e cancelamento de serviços
-✅ Consulta barbearias
+### Funcionalidades 
+
+✅ **Autenticação com credenciais** (e-mail e senha)
+✅ **Login via OAuth** (Google)
+✅ **Agendamento e cancelamento de serviços**
+✅ **Consulta barbearias**
 
 <br/>
 
