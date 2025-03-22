@@ -1,7 +1,15 @@
 
 # **BarberApp ✂**
 
-Projeto feito para agendamentos de serviços em barbearias, com opções de para escolha de funcionário para o serviço, dia e horário. App completo, permite cadastro com e-mail e senha, ou login com google, agendamento e cancelamento de serviços, além de outras features.
+Projeto feito para agendamentos de serviços em barbearias, construído com **Next.js**, **Prisma** e com banco de dados **PostgreSQL**.
+
+Funcionalidades
+✅ Autenticação com credenciais (e-mail e senha)
+✅ Login via OAuth (Google)
+✅ Agendamento e cancelamento de serviços
+✅ Consulta barbearias
+
+<br/>
 
 ## **Demo**
 
