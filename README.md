@@ -19,10 +19,9 @@ A demo pode ser acessado através do [link](https://barber-app-eta-one.vercel.ap
 
 Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-- React
-- TypeScript
-- PostgreSQL
-- Node 
+- **Next.js** → Framework para React com renderização híbrida
+- **TypeScript** → Tipagem estática para maior segurança no código
+- **PostgreSQL** → Banco de dados relacional
 
 ## Como Executar o Projeto
 
