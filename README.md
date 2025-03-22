@@ -6,11 +6,8 @@ Projeto feito para agendamentos de serviços em barbearias, construído com **Ne
 ### Funcionalidades 
 
 ✅ **Autenticação com credenciais** (e-mail e senha)
-
 ✅ **Login via OAuth** (Google)
-
 ✅ **Agendamento e cancelamento de serviços**
-
 ✅ **Consulta barbearias**
 
 <br/>
