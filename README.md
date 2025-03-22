@@ -11,7 +11,7 @@ A demo pode ser acessado através do [link](https://barber-app-eta-one.vercel.ap
   
 <p  align="center">
 
-<img  alt="rocketpay"  src="https://equivalent-apricot-peafowl.myfilebase.com/ipfs/QmdoUevSje8erBvftdc1wcFBRmxJsGujWcSHcbdEKAu21S"  width="100%">
+<img  alt="rocketpay"  src="https://equivalent-apricot-peafowl.myfilebase.com/ipfs/QmdoUevSje8erBvftdc1wcFBRmxJsGujWcSHcbdEKAu21S"  width="600px">
 
 </p>
 
@@ -24,7 +24,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - PostgreSQL
 - Node 
 
-  ## **Como Executar o Projeto**
+## Como Executar o Projeto
 
 ### **Pré-requisitos**
 
@@ -41,9 +41,8 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
    cd barberApp
    npm install
    ```
-3. Banco de dados: Crie um banco de dados Postgresql com a estrutura presente em prisma/schema.prisma
 
-4. Configure as variáveis de ambiente:
+3. Configure as variáveis de ambiente:
    - Crie um arquivo `.env` na raiz do projeto e adicione as seguintes variáveis:
      ```
      DATABASE_URL=postgresql://{user}:{password}@localhost:5432
@@ -53,6 +52,12 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
      RESEND_API_KEY=
      NEXT_PUBLIC_APP_URL=http://localhost:3000
      ```
+
+4. Execute as migrações do banco de dados:
+   ```bash
+   npx prisma migrate dev
+   ```
+
 5. Inicie o servidor:
    ```bash
    npm run dev
