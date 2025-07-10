@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { RegisterSchema } from '@/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/app/_components/ui/card';
+import { Card } from '@/app/_components/ui/card';
 import { BackButton } from '@/app/_components/auth/back-button';
 import {
   Form,
@@ -22,12 +22,14 @@ import { FormSuccess } from '@/app/_components/form-success';
 import { register } from '@/app/_actions/register';
 import { useState, useTransition } from 'react';
 import Image from 'next/image';
-import Header from '../_components/header';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 const Register = () => {
   const [error, setError] = useState<string | undefined>('');
   const [success, setSuccess] = useState<string | undefined>('');
   const [isPending, startTransition] = useTransition();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -45,14 +47,23 @@ const Register = () => {
     startTransition(() => {
       register(values).then((data) => {
         setError(data.error);
-        setSuccess(data.success);
+        if (data.success) {
+          form.reset();
+          setSuccess(data.success);
+
+          toast('Cadastro realizado com sucesso!', {
+            description: data.success,
+          });
+          setTimeout(() => {
+            router.push('/login');
+          }, 1000);
+        }
       });
     });
   };
 
   return (
     <>
-      <Header />
       <div className="p-5 pt-28 md:pt-5 md:mt-[82px] container flex gap-10 justify-around items-center">
         <div className=" flex w-full max-w-[348px] flex-col gap-4 items-center">
           <div>

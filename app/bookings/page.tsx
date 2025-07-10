@@ -1,4 +1,3 @@
-import Header from '../_components/header';
 import { redirect } from 'next/navigation';
 import { db } from '../_lib/prisma';
 import BookingItem from '../_components/booking-item';
@@ -42,7 +41,6 @@ const BookingsPage = async () => {
 
   return (
     <>
-      <Header />
       <div className="container px-5 py-6 pt-[6.5rem]">
         <h1 className="text-xl font-bold">Agendamentos</h1>
 

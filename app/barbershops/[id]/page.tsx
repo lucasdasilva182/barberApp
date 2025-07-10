@@ -1,7 +1,6 @@
 import { db } from '@/app/_lib/prisma';
 import BarbershopInfo from './_components/barbershop-info';
 import ServiceItem from './_components/service-item';
-import Header from '@/app/_components/header';
 import PhoneItem from '@/app/_components/phone-item';
 import { Card, CardContent } from '@/app/_components/ui/card';
 import Image from 'next/image';
@@ -35,7 +34,6 @@ const BarbershopDetailsPage = async ({ params }: BarbershopDetailsPageProps) => 
 
   return (
     <div>
-      <Header />
       <div className="pt-24 md:pt-32 container flex flex-col md:grid md:grid-cols-[70%_30%] gap-6 w-full">
         <div>
           <BarbershopInfo barbershop={barbershop} />

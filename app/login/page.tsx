@@ -25,7 +25,6 @@ import { signIn } from 'next-auth/react';
 import { FcGoogle } from 'react-icons/fc';
 import { Separator } from '@radix-ui/react-dropdown-menu';
 import Image from 'next/image';
-import Header from '../_components/header';
 
 const Login = () => {
   const [callbackUrl, setCallbackUrl] = useState('');
@@ -83,8 +82,6 @@ const Login = () => {
 
   return (
     <>
-      <Header />
-
       <div className="p-5 pt-28 md:pt-5 md:mt-[82px] container flex gap-10 justify-around items-center">
         <div className=" flex w-full max-w-[348px] flex-col gap-4 items-center justify-center">
           <div>

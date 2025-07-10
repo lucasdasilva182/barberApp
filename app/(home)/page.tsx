@@ -1,5 +1,4 @@
 import { format } from 'date-fns';
-import Header from '../_components/header';
 import { ptBR } from 'date-fns/locale';
 import Search from './_components/search';
 import BookingItem from '../_components/booking-item';
@@ -36,8 +35,6 @@ export default async function Home() {
 
   return (
     <div>
-      <Header />
-
       <div className="container px-5 py-6 pt-20">
         <div className="p-5">
           <h2 className="text-xl font-bold">

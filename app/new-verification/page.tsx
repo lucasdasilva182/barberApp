@@ -7,7 +7,6 @@ import { Card, CardContent, CardFooter, CardTitle } from '@/app/_components/ui/c
 import { BackButton } from '@/app/_components/auth/back-button';
 import { FormError } from '@/app/_components/form-error';
 import { FormSuccess } from '@/app/_components/form-success';
-import Header from '../_components/header';
 
 const NewVerificationPage = () => {
   const [error, setError] = useState<string | undefined>();
@@ -42,11 +41,10 @@ const NewVerificationPage = () => {
 
   return (
     <>
-      <Header />
-      <Card className="flex flex-col justify-center items-center p-5">
+      <div className="flex flex-col justify-center items-center p-5">
         <Card className="flex flex-col">
-          <CardTitle className="px-5 pt-5">Criar uma conta</CardTitle>
-          <CardContent className="flex flex-col gap-3">
+          <CardTitle className="px-5 pt-5">Verificacão de conta</CardTitle>
+          <CardContent className="flex flex-col gap-3 p-5 pb-3">
             <div className="flex items-center justify-center w-full">
               {!success && !error && <BeatLoader />}
               <FormSuccess message={success} />
@@ -57,7 +55,7 @@ const NewVerificationPage = () => {
             <BackButton label={'Voltar ao login'} href={'/login'} />
           </CardFooter>
         </Card>
-      </Card>
+      </div>
     </>
   );
 };
