@@ -7,7 +7,7 @@ import BarbershopItem from './_components/barbershop-item';
 import { currentUser } from '@/app/_lib/auth';
 
 export default async function Home() {
-  const session = await currentUser();
+  const user = await currentUser();
 
   const [barbershops, recomendenBarbershops, confirmedBookings] = await Promise.all([
     db.barbershop.findMany({}),
@@ -16,16 +16,16 @@ export default async function Home() {
         id: 'asc',
       },
     }),
-    session?.user
+    user
       ? await db.booking.findMany({
           where: {
-            userId: (session.user as any).id,
+            userId: (user as any).id,
             date: {
               gte: new Date(),
             },
           },
           include: {
-            service: true,
+            bookingServices: true,
             barbershop: true,
             barber: true,
           },
@@ -34,11 +34,11 @@ export default async function Home() {
   ]);
 
   return (
-    <div>
+    <>
       <div className="container px-5 py-6 pt-20">
-        <div className="p-5">
+        <div className="py-5">
           <h2 className="text-xl font-bold">
-            {session?.user ? `Olá, ${session.user.name?.split(' ')[0]}` : 'Olá!'}
+            {user ? `Olá, ${user.name?.split(' ')[0]}` : 'Olá!'}
           </h2>
           <p className="capitalize text-sm">
             {format(new Date(), "EEEE',' dd 'de' MMMM", {
@@ -54,7 +54,7 @@ export default async function Home() {
         {confirmedBookings.length > 0 && (
           <>
             <div className="mt-6">
-              <h2 className="pl-5 text-xs uppercase text-grey-400 font-bold mb-3">Agendamentos</h2>
+              <h2 className=" text-xs uppercase text-grey-400 font-bold mb-3">Agendamentos</h2>
               <div className="px-0 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
                 {confirmedBookings.map((booking) => (
                   <BookingItem key={booking.id} booking={booking} />
@@ -88,6 +88,6 @@ export default async function Home() {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

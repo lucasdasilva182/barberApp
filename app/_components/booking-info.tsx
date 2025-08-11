@@ -7,19 +7,27 @@ import { Pencil } from 'lucide-react';
 import { Separator } from './ui/separator';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { Decimal } from '@prisma/client/runtime/library';
+
+interface BookingService extends Service {
+  id: string;
+  name: string;
+  price: Decimal;
+  barbershopId: string;
+  description: string;
+  imageUrl: string;
+}
 
 interface BookingInfoProps {
   booking: Partial<Pick<Booking, 'date'>> & {
-    service: Pick<Service, 'name' | 'price'>;
     barbershop: Pick<Barbershop, 'name'>;
-    // barber: Barber | undefined;
     barber: Barber | undefined;
+    bookingServices: BookingService[];
   };
   onOpenBarberSheet?: () => void;
 }
 
 const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
-  // console.log(booking);
   const actualRoute = usePathname();
   const [isBooking, setIsBooking] = useState(false);
 
@@ -32,15 +40,19 @@ const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
   return (
     <Card>
       <CardContent className="p-3 flex flex-col gap-3">
-        <div className="flex justify-between">
-          <h2 className="font-bold text-sm">{booking.service.name}</h2>
-          <h3 className="font-bold">
-            {Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-            }).format(Number(booking.service.price))}
-          </h3>
-        </div>
+        {booking.bookingServices &&
+          booking.bookingServices.length > 0 &&
+          booking.bookingServices.map((bookingInfos, index) => (
+            <div className="flex justify-between" key={bookingInfos.id ?? index}>
+              <h2 className="font-bold text-sm">{bookingInfos.name}</h2>
+              <h3 className="font-bold">
+                {Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL',
+                }).format(Number(bookingInfos.price))}
+              </h3>
+            </div>
+          ))}
         {booking.date && (
           <>
             <div className="flex justify-between">

@@ -19,7 +19,7 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
   };
 
   return (
-    <Card className="min-w-full max-w-full rounded-2xl">
+    <Card className="min-w-full max-w-full rounded-lg">
       <CardContent className="p-0">
         <div className="w-full h-[159px] relative">
           <div className="absolute top-2 left-2 z-50 ">
@@ -37,23 +37,18 @@ const BarbershopItem = ({ barbershop }: BarbershopItemProps) => {
               objectFit: 'cover',
             }}
             fill
-            className="rounded-2xl"
+            className="rounded-lg"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             alt={barbershop.name}
           />
         </div>
 
         <div className="px-3 pt-3 pb-3">
-          <h2 className="font-bold overflow-hidden text-ellipsis text-nowrap">
-            {barbershop.name}
-          </h2>
+          <h2 className="font-bold overflow-hidden text-ellipsis text-nowrap">{barbershop.name}</h2>
           <p className="text-sm mt-2 text-grey-400 overflow-hidden text-ellipsis text-nowrap">
             {barbershop.address}
           </p>
-          <Button
-            className="w-full mt-3"
-            variant="secondary"
-            onClick={handleBookingClick}
-          >
+          <Button className="w-full mt-3" variant="secondary" onClick={handleBookingClick}>
             Reservar
           </Button>
         </div>

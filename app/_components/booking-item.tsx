@@ -37,7 +37,7 @@ import BookingInfo from './booking-info';
 interface BookingItemProps {
   booking: Prisma.BookingGetPayload<{
     include: {
-      service: true;
+      bookingServices: true;
       barbershop: true;
       barber: true;
     };
@@ -68,7 +68,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               <Badge variant={isBookingConfirmed ? 'default' : 'secondary'} className="w-fit">
                 {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
               </Badge>
-              <h2 className="font-bold w-fit">{booking.service.name}</h2>
+              {/* <h2 className="font-bold w-fit">{booking.service.name}</h2> */}
 
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
@@ -93,7 +93,12 @@ const BookingItem = ({ booking }: BookingItemProps) => {
 
         <div className="px-5">
           <div className="relative h-[180px] w-full mt-6">
-            <Image src="/barbershop-map.png" fill alt={booking.barbershop.name} />
+            <Image
+              src="/barbershop-map.png"
+              fill
+              alt={booking.barbershop.name}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
 
             <div className="w-full absolute bottom-4 left-0 px-5">
               <Card>

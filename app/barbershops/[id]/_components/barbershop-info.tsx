@@ -20,12 +20,14 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
 
   return (
     <div>
-      <div className="h-[250px] rounded-xl overflow-hidden w-full relative">
+      <div className="h-[250px] rounded-lg overflow-hidden w-full relative">
         <Image
           src={barbershop.imageUrl}
           fill
           alt={barbershop.name}
           style={{ objectFit: 'cover' }}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority
         />
       </div>
 
@@ -37,7 +39,7 @@ const BarbershopInfo = ({ barbershop }: BarbershopInfoProps) => {
             <p className="text-sm">{barbershop.address}</p>
           </div>
         </div>
-        <div className="flex flex-col py-2 px-4 rounded-xl bg-accent items-center gap-1 mt-2">
+        <div className="flex flex-col py-2 px-4 rounded-lg bg-accent items-center gap-1 mt-2">
           <div className="text-lg flex  gap-2 items-center justify-center">
             <StarIcon size={18} fill="#8161ff" className="text-primary" />
             5,0

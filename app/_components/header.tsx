@@ -41,7 +41,13 @@ const Header = () => {
       <Card className="rounded-none">
         <CardContent className="container p-5 justify-between flex flex-row items-center gap-6">
           <Link href={'/'} className="w-[120px]">
-            <Image src="/logo.png" alt="Logo" height={22} width={120} />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              height={22}
+              width={120}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </Link>
 
           {pathname != '/' && (

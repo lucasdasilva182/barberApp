@@ -4,40 +4,42 @@ import BookingItem from '../_components/booking-item';
 import { currentUser } from '../_lib/auth';
 
 const BookingsPage = async () => {
-  const session = await currentUser();
+  const user = await currentUser();
 
-  if (!session?.user) {
+  if (!user) {
     return redirect('/login');
   }
 
   const [confirmedBookings, finishedBookings] = await Promise.all([
     db.booking.findMany({
       where: {
-        userId: (session.user as any).id,
+        userId: (user as any).id,
         date: {
           gte: new Date(),
         },
       },
       include: {
-        service: true,
+        bookingServices: true,
         barbershop: true,
         barber: true,
       },
     }),
     db.booking.findMany({
       where: {
-        userId: (session.user as any).id,
+        userId: (user as any).id,
         date: {
           lt: new Date(),
         },
       },
       include: {
-        service: true,
+        bookingServices: true,
         barbershop: true,
         barber: true,
       },
     }),
   ]);
+
+  console.log(confirmedBookings);
 
   return (
     <>

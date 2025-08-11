@@ -164,11 +164,17 @@ const Login = () => {
             layout="responsive"
             width={500}
             height={500}
-            className="rounded-2xl w-full h-auto"
+            className="rounded-lg w-full h-auto"
             alt="Teste"
           />
           <div className="flex flex-col gap-4 p-11">
-            <Image src="/logo.png" alt="Logo" height={32} width={130} />
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              height={32}
+              width={130}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
             <p className="text-xl text-gray-400">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam eget nunc sed elit.
               Nullam eget nunc sed elit. Nullam eget nunc

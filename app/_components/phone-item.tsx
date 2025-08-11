@@ -1,6 +1,6 @@
 'use client';
 
-import { SmartphoneIcon } from 'lucide-react';
+import { Copy, SmartphoneIcon } from 'lucide-react';
 import { Button } from './ui/button';
 import { toast } from 'sonner';
 
@@ -15,15 +15,18 @@ const PhoneItem = ({ phone }: PhoneItemProps) => {
   };
 
   return (
-    <div className="flex justify-between" key={phone}>
-      {/* ESQUERDA */}
+    <div className="flex justify-start gap-2" key={phone}>
       <div className="flex items-center gap-2">
         <SmartphoneIcon />
         <p className="text-sm">{phone}</p>
       </div>
-      {/* DIREITA */}
-      <Button variant="outline" size="sm" onClick={() => handleCopyPhoneClick(phone)}>
-        Copiar
+      <Button
+        variant="ghost"
+        className="p-2 h-fit"
+        size="sm"
+        onClick={() => handleCopyPhoneClick(phone)}
+      >
+        <Copy size={14} />
       </Button>
     </div>
   );
