@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
-import { Pencil } from 'lucide-react';
+import { Heading4, Pencil } from 'lucide-react';
 import { Separator } from './ui/separator';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -40,19 +40,37 @@ const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
   return (
     <Card>
       <CardContent className="p-3 flex flex-col gap-3">
-        {booking.bookingServices &&
-          booking.bookingServices.length > 0 &&
-          booking.bookingServices.map((bookingInfos, index) => (
-            <div className="flex justify-between" key={bookingInfos.id ?? index}>
-              <h2 className="font-bold text-sm">{bookingInfos.name}</h2>
-              <h3 className="font-bold">
-                {Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                }).format(Number(bookingInfos.price))}
-              </h3>
-            </div>
-          ))}
+        <h3 className="text-gray-400 text-sm">Serviços:</h3>
+
+        <Card className="p-3 pb-2 bg-muted">
+          {booking.bookingServices &&
+            booking.bookingServices.length > 0 &&
+            booking.bookingServices.map((bookingInfos, index) => (
+              <div className="flex justify-between py-1" key={bookingInfos.id ?? index}>
+                <p className="font-normal text-sm">{bookingInfos.name}</p>
+                <p className="font-semibold text-primary text-sm">
+                  {Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  }).format(Number(bookingInfos.price))}
+                </p>
+              </div>
+            ))}
+          <Separator className="my-2 bg-foreground/50" />
+          <div className="flex justify-between">
+            <h3 className="text-gray-400 font-bold">Total:</h3>
+            <h4 className="font-bold">
+              {Intl.NumberFormat('pt-BR', {
+                style: 'currency',
+                currency: 'BRL',
+              }).format(
+                booking.bookingServices.reduce((acc, service) => {
+                  return acc + Number(service.price);
+                }, 0)
+              )}
+            </h4>
+          </div>
+        </Card>
         {booking.date && (
           <>
             <div className="flex justify-between">
