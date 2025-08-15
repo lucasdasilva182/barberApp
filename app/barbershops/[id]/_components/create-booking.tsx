@@ -11,20 +11,18 @@ import {
 } from '@/app/_components/ui/sheet';
 import { Barbershop as PrismaBarbershop, Booking, Service, Barber, WorkHour } from '@prisma/client';
 import { ptBR } from 'date-fns/locale';
-import { useSession } from 'next-auth/react';
+import { signIn, useSession } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
 import { generateDayTimeList } from '../_helpers/hours';
 import { format, setHours, setMinutes } from 'date-fns';
 import { SaveBooking } from '../actions/save-booking';
-import { AlertCircle, ArrowRight, Loader2 } from 'lucide-react';
+import { AlertCircle, ArrowRight, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { getDayBookings } from '../actions/get-day-bookings';
 import BookingInfo from '@/app/_components/booking-info';
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/_components/ui/avatar';
 import { FaUser } from 'react-icons/fa';
-import { isOpenNow } from '@/app/_lib/isOpenNow';
-
 interface Barbershop extends PrismaBarbershop {
   barbers?: { id: string; name: string; image: string | null; barbershopId: string }[];
   services: Service[];
@@ -58,13 +56,11 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
     closeBarberSheet();
   };
 
-  const handleBookingClick = () => {
-    // if (!isAuthenticated) {
-    //   return signIn();
-    // }
-  };
-
   const handleBookingSubmit = async () => {
+    if (!isAuthenticated) {
+      return signIn();
+    }
+
     setSubmitIsLoading(true);
     try {
       if (!hour || !date || !data?.user) {
@@ -130,8 +126,6 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
     setHour(time);
   };
 
-  const isOpen = isOpenNow(barbershop.workHours);
-
   const timeList = useMemo(() => {
     if (!date) {
       return [];
@@ -157,9 +151,7 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
 
       return false;
     });
-  }, [date, dayBookings]);
-
-  console.log(barbershop);
+  }, [date, dayBookings, barbershop.workHours]);
 
   return (
     <>
@@ -167,7 +159,7 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
         {selectedServices.length > 0 && (
           <div className="container fixed bottom-10 z-[120] flex justify-end">
             <SheetTrigger asChild>
-              <Button onClick={handleBookingClick}>
+              <Button>
                 Agendar <ArrowRight className="ml-1" size={18} />
               </Button>
             </SheetTrigger>
@@ -175,11 +167,11 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
         )}
 
         <SheetContent className="p-0 overflow-y-auto ">
-          <SheetHeader className="text-left px-5 py-6 border-b border-solid border-secondary">
+          <SheetHeader className="text-left px-5 py-5 border-secondary">
             <SheetTitle>Fazer reserva</SheetTitle>
           </SheetHeader>
 
-          <div className="py-5">
+          <div className="pb-5">
             <Calendar
               mode="single"
               selected={date}
@@ -213,22 +205,53 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
           </div>
 
           {date && (
-            <div className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden py-6 px-5 border-t border-solid border-secondary">
-              {timeList.length > 1 &&
-                timeList.map((time) => (
+            <div className="flex items-center justify-between py-5 px-2 border-t border-solid border-secondary">
+              {timeList.length > 1 && (
+                <>
                   <Button
-                    key={time}
-                    variant={hour === time ? 'default' : 'outline'}
-                    className="mb-2 rounded-full"
-                    onClick={() => handleHourClick(time)}
+                    onClick={() => {
+                      const container = document.getElementById('time-scroll-container');
+                      if (container) {
+                        container.scrollBy({ left: -200, behavior: 'smooth' });
+                      }
+                    }}
+                    className="bg-accent hover:bg-accent border-0  z-10 p-2 rounded-full h-auto"
                   >
-                    {time}
+                    <ChevronLeft size={16} />
                   </Button>
-                ))}
-
-              {timeList.length === 0 && (
-                <p className="text-sm text-gray-500">Nenhum horário disponível</p>
+                </>
               )}
+
+              <div
+                id="time-scroll-container"
+                className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden px-1  scroll-smooth"
+              >
+                {timeList.length > 1 ? (
+                  timeList.map((time) => (
+                    <Button
+                      key={time}
+                      variant={hour === time ? 'default' : 'outline'}
+                      className="rounded-lg whitespace-nowrap"
+                      onClick={() => handleHourClick(time)}
+                    >
+                      {time}
+                    </Button>
+                  ))
+                ) : (
+                  <p className="text-sm text-gray-500">Nenhum horário disponível</p>
+                )}
+              </div>
+              <Button
+                onClick={() => {
+                  const container = document.getElementById('time-scroll-container');
+                  if (container) {
+                    container.scrollBy({ left: 200, behavior: 'smooth' });
+                  }
+                }}
+                className="bg-accent hover:bg-accent border-0  z-10 p-2 rounded-full h-auto"
+              >
+                <ChevronRight size={16} />
+              </Button>
             </div>
           )}
 

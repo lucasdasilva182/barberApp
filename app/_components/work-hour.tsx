@@ -39,16 +39,6 @@ const WeeklyWorkHour = ({ workHour }: WorkHourProps) => {
 
   return (
     <div className="flex flex-col">
-      {showToday && (
-        <div className="flex justify-between pb-2">
-          <p className="text-sm font-medium">Hoje</p>
-          <p className="text-sm">
-            {workHour[today].openTime && workHour[today].closeTime
-              ? `${workHour[today].openTime} - ${workHour[today].closeTime}`
-              : 'Fechado'}
-          </p>
-        </div>
-      )}
       <Accordion onValueChange={handleOpenChange} type="single" collapsible>
         <AccordionItem value="item-1" className="border-none">
           <div className="w-fit">
@@ -70,6 +60,16 @@ const WeeklyWorkHour = ({ workHour }: WorkHourProps) => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
+      {showToday && (
+        <div className="flex justify-between pt-4">
+          <p className="text-sm font-medium">Hoje</p>
+          <p className="text-sm">
+            {workHour[today].openTime && workHour[today].closeTime
+              ? `${workHour[today].openTime} - ${workHour[today].closeTime}`
+              : 'Fechado'}
+          </p>
+        </div>
+      )}
     </div>
   );
 };
