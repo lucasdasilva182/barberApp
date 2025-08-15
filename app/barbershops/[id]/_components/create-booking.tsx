@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/app/_components/ui/sheet';
-import { Barbershop as PrismaBarbershop, Booking, Service, Barber } from '@prisma/client';
+import { Barbershop as PrismaBarbershop, Booking, Service, Barber, WorkHour } from '@prisma/client';
 import { ptBR } from 'date-fns/locale';
 import { useSession } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
@@ -23,10 +23,12 @@ import { getDayBookings } from '../actions/get-day-bookings';
 import BookingInfo from '@/app/_components/booking-info';
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/_components/ui/avatar';
 import { FaUser } from 'react-icons/fa';
+import { isOpenNow } from '@/app/_lib/isOpenNow';
 
 interface Barbershop extends PrismaBarbershop {
   barbers?: { id: string; name: string; image: string | null; barbershopId: string }[];
   services: Service[];
+  workHours: WorkHour[];
 }
 
 interface CreateBookingProps {
@@ -128,12 +130,17 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
     setHour(time);
   };
 
+  const isOpen = isOpenNow(barbershop.workHours);
+
   const timeList = useMemo(() => {
     if (!date) {
       return [];
     }
 
-    return generateDayTimeList(date).filter((time) => {
+    return generateDayTimeList({
+      selectedDate: date,
+      workHours: barbershop.workHours,
+    }).filter((time) => {
       const timeHour = Number(time.split(':')[0]);
       const timeMinutes = Number(time.split(':')[1]);
 
@@ -207,16 +214,21 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
 
           {date && (
             <div className="flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden py-6 px-5 border-t border-solid border-secondary">
-              {timeList.map((time) => (
-                <Button
-                  key={time}
-                  variant={hour === time ? 'default' : 'outline'}
-                  className="mb-2 rounded-full"
-                  onClick={() => handleHourClick(time)}
-                >
-                  {time}
-                </Button>
-              ))}
+              {timeList.length > 1 &&
+                timeList.map((time) => (
+                  <Button
+                    key={time}
+                    variant={hour === time ? 'default' : 'outline'}
+                    className="mb-2 rounded-full"
+                    onClick={() => handleHourClick(time)}
+                  >
+                    {time}
+                  </Button>
+                ))}
+
+              {timeList.length === 0 && (
+                <p className="text-sm text-gray-500">Nenhum horário disponível</p>
+              )}
             </div>
           )}
 
