@@ -80,7 +80,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             <div className="flex flex-col justify-center items-center flex-1 border-l border-solid border-secondary">
               <p className="text-sm capitalize">{format(booking.date, 'MMMM', { locale: ptBR })}</p>
               <p className="text-2xl">{format(booking.date, 'dd')}</p>
-              <p className="text-sm">{format(booking.date, 'hh:mm')}</p>
+              <p className="text-sm">{format(booking.date, 'HH:mm')}</p>
             </div>
           </CardContent>
         </Card>

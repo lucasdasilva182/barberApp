@@ -79,7 +79,7 @@ const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
             </div>
             <div className="flex justify-between">
               <h3 className="text-gray-400 text-sm">Horário:</h3>
-              <h4 className="text-sm">{format(booking.date, 'hh:mm', { locale: ptBR })}</h4>
+              <h4 className="text-sm">{format(booking.date, 'HH:mm', { locale: ptBR })}</h4>
             </div>
           </>
         )}

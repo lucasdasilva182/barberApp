@@ -16,7 +16,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { generateDayTimeList } from '../_helpers/hours';
 import { format, setHours, setMinutes } from 'date-fns';
 import { SaveBooking } from '../actions/save-booking';
-import { ArrowRight, Loader2 } from 'lucide-react';
+import { AlertCircle, ArrowRight, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { getDayBookings } from '../actions/get-day-bookings';
@@ -250,7 +250,12 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
             />
           </div>
 
-          <SheetFooter className="px-5 pb-5">
+          <SheetFooter className="flex !flex-col justify-center items-center px-5 pb-5">
+            {!date && (
+              <p className="flex gap-2 text-xs text-destructive opacity-85 mb-2">
+                <AlertCircle size={14} className="mt-[2px]" /> Selecione uma data e um horário
+              </p>
+            )}
             <Button
               variant="default"
               className="w-full"
