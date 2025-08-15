@@ -68,7 +68,6 @@ const BookingItem = ({ booking }: BookingItemProps) => {
               <Badge variant={isBookingConfirmed ? 'default' : 'secondary'} className="w-fit">
                 {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
               </Badge>
-              {/* <h2 className="font-bold w-fit">{booking.service.name}</h2> */}
 
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
@@ -123,7 +122,21 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
           </Badge>
 
-          <BookingInfo booking={booking} />
+          <BookingInfo
+            booking={{
+              ...booking,
+              barbershop: {
+                name: booking.barbershop.name,
+              },
+              bookingServices: booking.bookingServices.map((service) => ({
+                ...service,
+                barbershopId: booking.barbershop.id,
+                description: booking.barbershop.description ?? '',
+                imageUrl: booking.barbershop.imageUrl ?? '',
+                name: service.name ?? '',
+              })),
+            }}
+          />
 
           <SheetFooter className="flex-row gap-3 mt-6">
             <SheetClose asChild>

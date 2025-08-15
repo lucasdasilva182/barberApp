@@ -10,7 +10,8 @@ import { currentUser } from '@/app/_lib/auth';
 import CreateBooking from './_components/create-booking';
 import { GetBarbershop } from './actions/get-barbershop';
 import { useEffect, useState } from 'react';
-import { Service } from '@prisma/client';
+import { Service, WorkHour } from '@prisma/client';
+import WeeklyWorkHour from '@/app/_components/work-hour';
 
 interface Barbershop {
   id: string;
@@ -20,6 +21,7 @@ interface Barbershop {
   address: string;
   imageUrl: string;
   services: Service[];
+  workHours: WorkHour[];
 }
 
 interface BarbershopDetailsPageProps {
@@ -133,6 +135,8 @@ const BarbershopDetailsPage = ({ params }: BarbershopDetailsPageProps) => {
               {barbershop.phones.map((phone) => (
                 <PhoneItem key={phone + Math.random()} phone={phone} />
               ))}
+              <Separator />
+              <WeeklyWorkHour workHour={barbershop.workHours} />
             </CardContent>
           </Card>
         </div>

@@ -41,40 +41,50 @@ model Barbershop {
   barbers     Barber[]
   services    Service[]
   bookings    Booking[]
+  workHours   WorkHour[]
+}
+
+model WorkHour {
+  id           String   @id @default(uuid())
+  dayOfWeek    Int
+  openTime     String?  
+  closeTime    String?   
+  barbershopId String
+  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
 }
 
 
 model Service {
-  id           String     @id @default(uuid())
-  name         String
-  price        Decimal    @db.Decimal(10, 2)
-  barbershopId String
-  barbershop   Barbershop @relation(fields: [barbershopId], references: [id])
-  description  String
-  imageUrl     String
+  id              String     @id @default(uuid())
+  name            String
+  price           Decimal    @db.Decimal(10, 2)
+  barbershopId    String
+  barbershop      Barbershop @relation(fields: [barbershopId], references: [id])
+  description     String
+  imageUrl        String
   bookingServices BookingService[]
 }
 
 model Booking {
-  id          String     @id @default(uuid())
-  userId      String
-  user        User       @relation(fields: [userId], references: [id])
-  barberId    String?     
-  barber      Barber?    @relation(fields: [barberId], references: [id]) 
-  barbershopId String
-  barbershop  Barbershop @relation(fields: [barbershopId], references: [id])
+  id              String     @id @default(uuid())
+  userId          String
+  user            User       @relation(fields: [userId], references: [id])
+  barberId        String?     
+  barber          Barber?    @relation(fields: [barberId], references: [id]) 
+  barbershopId    String
+  barbershop      Barbershop @relation(fields: [barbershopId], references: [id])
   bookingServices BookingService[]
-  date        DateTime
+  date            DateTime
 }
 
 model BookingService {
-  id                 String  @id @default(uuid())
-  serviceId          String
-  service            Service @relation(fields: [serviceId], references: [id])
-  bookingId          String
-  booking            Booking @relation(fields: [bookingId], references: [id])
-  price              Decimal    @db.Decimal(10, 2)
-  name               String?
+  id              String  @id @default(uuid())
+  serviceId       String
+  service         Service @relation(fields: [serviceId], references: [id])
+  bookingId       String
+  booking         Booking @relation(fields: [bookingId], references: [id])
+  price           Decimal    @db.Decimal(10, 2)
+  name            String?
 }
 
 model Account {

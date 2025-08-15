@@ -3,7 +3,7 @@ import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
-import { Heading4, Pencil } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { Separator } from './ui/separator';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -21,7 +21,7 @@ interface BookingService extends Service {
 interface BookingInfoProps {
   booking: Partial<Pick<Booking, 'date'>> & {
     barbershop: Pick<Barbershop, 'name'>;
-    barber: Barber | undefined;
+    barber: Barber | undefined | null;
     bookingServices: BookingService[];
   };
   onOpenBarberSheet?: () => void;

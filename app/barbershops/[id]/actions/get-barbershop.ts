@@ -9,6 +9,6 @@ interface GetBarbershopParams {
 export const GetBarbershop = async (params: GetBarbershopParams) => {
   return await db.barbershop.findUnique({
     where: { id: params.barbershopId },
-    include: { services: true, barbers: true },
+    include: { services: true, barbers: true, workHours: true },
   });
 };

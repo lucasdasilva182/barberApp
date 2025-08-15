@@ -1,7 +1,6 @@
 'use client';
 import { Button } from '@/app/_components/ui/button';
 import { Calendar } from '@/app/_components/ui/calendar';
-import { Card, CardContent } from '@/app/_components/ui/card';
 import {
   Sheet,
   SheetContent,
@@ -12,8 +11,7 @@ import {
 } from '@/app/_components/ui/sheet';
 import { Barbershop as PrismaBarbershop, Booking, Service, Barber } from '@prisma/client';
 import { ptBR } from 'date-fns/locale';
-import { signIn, useSession } from 'next-auth/react';
-import Image from 'next/image';
+import { useSession } from 'next-auth/react';
 import { useEffect, useMemo, useState } from 'react';
 import { generateDayTimeList } from '../_helpers/hours';
 import { format, setHours, setMinutes } from 'date-fns';
@@ -153,6 +151,8 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
       return false;
     });
   }, [date, dayBookings]);
+
+  console.log(barbershop);
 
   return (
     <>
