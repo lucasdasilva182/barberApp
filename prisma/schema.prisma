@@ -17,9 +17,33 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  phone         String?     
+  birthDate     DateTime?   
+  address       Address[]
   accounts      Account[]
   sessions      Session[]
   bookings      Booking[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Address {
+  id           String   @id @default(cuid())
+  street       String
+  number       String
+  complement   String?
+  neighborhood String
+  city         String
+  state        String
+  zipCode      String
+  country      String   @default("Brazil")
+  type         String   @default("other")
+  isDefault    Boolean  @default(false)
+  userId       String
+  user         User     @relation(fields: [userId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  @@index([userId])
 }
 
 model Barber {
@@ -29,6 +53,8 @@ model Barber {
   barbershopId  String
   barbershop    Barbershop @relation(fields: [barbershopId], references: [id])
   bookings      Booking[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Barbershop {
@@ -42,6 +68,8 @@ model Barbershop {
   services    Service[]
   bookings    Booking[]
   workHours   WorkHour[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model WorkHour {
@@ -63,6 +91,8 @@ model Service {
   description     String
   imageUrl        String
   bookingServices BookingService[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model Booking {
