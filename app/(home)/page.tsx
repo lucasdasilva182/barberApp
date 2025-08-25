@@ -36,7 +36,7 @@ export default async function Home() {
   return (
     <>
       <div className="container px-5 py-6 pt-20">
-        <div className="py-5">
+        <div className="py-6">
           <h2 className="text-xl font-bold">
             {user ? `Olá, ${user.name?.split(' ')[0]}` : 'Olá!'}
           </h2>
@@ -47,13 +47,13 @@ export default async function Home() {
           </p>
         </div>
 
-        <div className="px-0 mt-6">
+        <div className="px-0 mb-6 block md:hidden">
           <Search />
         </div>
 
         {confirmedBookings.length > 0 && (
           <>
-            <div className="mt-6">
+            <div>
               <h2 className=" text-xs uppercase text-grey-400 font-bold mb-3">Agendamentos</h2>
               <div className="px-0 flex gap-3 overflow-x-auto [&::-webkit-scrollbar]:hidden">
                 {confirmedBookings.map((booking) => (

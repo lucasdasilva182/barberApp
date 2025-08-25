@@ -3,28 +3,16 @@
 import Image from 'next/image';
 import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
-import { Calendar, LogInIcon, LogOut, MenuIcon } from 'lucide-react';
+import { LogInIcon, MenuIcon } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import SideMenu from './side-menu';
 import Link from 'next/link';
-import { signIn, signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import Search from '../(home)/_components/search';
-import { usePathname } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { FaUser } from 'react-icons/fa';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from './ui/dropdown-menu';
 import { useEffect, useState } from 'react';
 
 const Header = () => {
-  const handleLogout = () => {
-    signOut();
-  };
-  const pathname = usePathname();
   const { data } = useSession();
 
   const [search, setSearch] = useState<string>('');
@@ -50,42 +38,28 @@ const Header = () => {
             />
           </Link>
 
-          {pathname != '/' && (
-            <div className="hidden md:flex">
-              <Search defaultValues={{ search: search }} customClass={'w-full'} />
-            </div>
-          )}
+          {/* {pathname != '/' && ( */}
+          <div className="hidden md:flex">
+            <Search defaultValues={{ search: search }} customClass={'w-full'} />
+          </div>
+          {/* )} */}
 
           <div className="hidden md:flex gap-2">
-            <Button asChild variant="ghost" className="justify-start gap-2">
-              <Link href="/bookings">
-                <Calendar size={16} />
-                Agendamentos
-              </Link>
-            </Button>
             {data?.user ? (
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-3 ">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="outline-none">
-                      <Avatar>
-                        <AvatarImage src={data.user?.image ?? ''} />
-                        <AvatarFallback className="bg-foreground">
-                          <FaUser className="text-background" />
-                        </AvatarFallback>
-                      </Avatar>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-40 z-[110]" align="end">
-                      <DropdownMenuItem className="gap-2" onClick={handleLogout}>
-                        <LogOut size={18} />
-                        Logout
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Link href="/account/profile">
+                    <Avatar>
+                      <AvatarImage src={data.user?.image ?? ''} />
+                      <AvatarFallback className="">
+                        {data.user?.name?.charAt(0).toUpperCase()}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Link>
                 </div>
               </div>
             ) : (
-              <Link href="/login">
+              <Link href="/auth/login">
                 <Button className="w-full justify-start">
                   <LogInIcon className="mr-2" size={16} />
                   Login

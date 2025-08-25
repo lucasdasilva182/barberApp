@@ -1,13 +1,13 @@
 import { redirect } from 'next/navigation';
-import { db } from '../_lib/prisma';
-import BookingItem from '../_components/booking-item';
-import { currentUser } from '../_lib/auth';
+import { db } from '../../_lib/prisma';
+import BookingItem from '../../_components/booking-item';
+import { currentUser } from '../../_lib/auth';
 
 const BookingsPage = async () => {
   const user = await currentUser();
 
   if (!user) {
-    return redirect('/login');
+    return redirect('/auth/login');
   }
 
   const [confirmedBookings, finishedBookings] = await Promise.all([
@@ -38,8 +38,6 @@ const BookingsPage = async () => {
       },
     }),
   ]);
-
-  console.log(confirmedBookings);
 
   return (
     <>

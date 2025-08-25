@@ -91,11 +91,8 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
         description: format(newDate, "'Para' dd 'de' MMMM 'às' HH':'mm'.'", {
           locale: ptBR,
         }),
-        action: {
-          label: 'Visualizar',
-          onClick: () => router.push('/bookings'),
-        },
       });
+      router.push('/account/bookings');
     } catch (error) {
       console.error(error);
     } finally {

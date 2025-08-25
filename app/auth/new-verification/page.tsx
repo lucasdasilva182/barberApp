@@ -52,7 +52,7 @@ const NewVerificationPage = () => {
             </div>
           </CardContent>
           <CardFooter>
-            <BackButton label={'Voltar ao login'} href={'/login'} />
+            <BackButton label={'Voltar ao login'} href={'/auth/login'} />
           </CardFooter>
         </Card>
       </div>

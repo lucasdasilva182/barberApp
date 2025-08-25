@@ -1,4 +1,4 @@
-import NextAuth, { DefaultSession } from 'next-auth';
+import NextAuth from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 
 import { db } from '@/app/_lib/prisma';
@@ -8,7 +8,7 @@ import { getAccountByUserId } from '@/app/_data/account';
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   pages: {
-    signIn: '/login',
+    signIn: '/auth/login',
     error: '/error',
   },
   events: {
@@ -21,16 +21,15 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   },
   callbacks: {
     async signIn({ user, account }) {
-      //Allow OAuth without email verification
       if (account?.provider !== 'credentials') return true;
 
       const existingUser = await getUserById(user?.id ?? '');
 
-      //Prevent sign in without email verification
       if (!existingUser?.emailVerified) return false;
 
       return true;
     },
+
     async session({ token, session }) {
       if (token.sub && session.user) {
         session.user.id = token.sub;
@@ -40,10 +39,17 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         session.user.name = token.name;
         session.user.email = token.email as string;
         session.user.isOAuth = token.isOAuth as boolean;
+        session.user.phone = token.phone as string | undefined;
+        session.user.birthDate = token.birthDate as Date | undefined;
+        session.user.address = token.address as string[] | undefined;
+
+        session.user.createdAt = token.createdAt as Date;
+        session.user.updatedAt = token.updatedAt as Date;
       }
 
       return session;
     },
+
     async jwt({ token }) {
       if (!token.sub) return token;
 
@@ -56,6 +62,11 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       token.isOAuth = !!existingAccount;
       token.name = existingUser.name;
       token.email = existingUser.email;
+      token.phone = existingUser.phone;
+      token.birthDate = existingUser.birthDate;
+      token.address = existingUser.address;
+      token.createdAt = existingUser.createdAt;
+      token.updatedAt = existingUser.updatedAt;
 
       return token;
     },

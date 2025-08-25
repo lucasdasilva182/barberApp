@@ -10,6 +10,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -88,6 +89,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
       <SheetContent className="px-0 overflow-y-auto">
         <SheetHeader className="px-5 text-left pb-6 border-b border-solid border-secondary">
           <SheetTitle>Informações da Reserva</SheetTitle>
+          <SheetDescription className="!p-0 !m-0"></SheetDescription>
         </SheetHeader>
 
         <div className="px-5">

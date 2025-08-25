@@ -9,7 +9,7 @@ import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Decimal } from '@prisma/client/runtime/library';
 
-interface BookingService extends Service {
+interface BookingService {
   id: string;
   name: string;
   price: Decimal;
