@@ -5,6 +5,15 @@ import BookingItem from '../_components/booking-item';
 import { db } from '../_lib/prisma';
 import BarbershopItem from './_components/barbershop-item';
 import { currentUser } from '@/app/_lib/auth';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/app/_components/ui/carousel';
+import { FlexibleCarousel } from '../_components/carousel-item';
+import { Barbershop } from '@prisma/client';
 
 export default async function Home() {
   const user = await currentUser();
@@ -33,6 +42,10 @@ export default async function Home() {
       : Promise.resolve([]),
   ]);
 
+  const renderBarbershopItem = (barbershop: Barbershop) => {
+    // Replace BarbershopType with your actual type
+    return <BarbershopItem barbershop={barbershop} />;
+  };
   return (
     <>
       <div className="container px-5 py-6 pt-20">
@@ -66,26 +79,25 @@ export default async function Home() {
 
         <div className="mt-6">
           <h2 className="px-0 text-xs uppercase text-grey-400 font-bold mb-3">Recomendados</h2>
-
-          <div className="flex px-0 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+          <FlexibleCarousel className="py-4">
             {barbershops.map((barbershop) => (
-              <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
+              <CarouselItem key={barbershop.id} className="basis-1/2 md:basis-1/4 lg:basis-1/6">
                 <BarbershopItem barbershop={barbershop} />
-              </div>
+              </CarouselItem>
             ))}
-          </div>
+          </FlexibleCarousel>
         </div>
 
         <div className="mt-6">
           <h2 className="px-0 text-xs uppercase text-grey-400 font-bold mb-3">Populares</h2>
 
-          <div className="flex px-0 gap-4 overflow-x-auto [&::-webkit-scrollbar]:hidden">
+          <FlexibleCarousel className="py-4">
             {recomendenBarbershops.map((barbershop) => (
-              <div key={barbershop.id} className="min-w-[167px] max-w-[167px]">
+              <CarouselItem key={barbershop.id} className="basis-1/2 md:basis-1/4 lg:basis-1/6">
                 <BarbershopItem barbershop={barbershop} />
-              </div>
+              </CarouselItem>
             ))}
-          </div>
+          </FlexibleCarousel>
         </div>
       </div>
     </>
