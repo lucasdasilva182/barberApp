@@ -272,7 +272,7 @@ const AccountPage = () => {
                             )}
                           />
 
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-xs text-muted-foreground">
                             Para manter a senha atual, deixe em branco.
                           </p>
                           <FormField
@@ -317,12 +317,12 @@ const AccountPage = () => {
                       {/* Address */}
                       <div className="space-y-6 w-full">
                         <>
-                          <h3 className="text-lg font-semibold mb-4">Endereço</h3>
+                          <h3 className="text-lg font-semibold lg:mb-4">Endereço</h3>
                           <FormField
                             control={form.control}
                             name="address.zipCode"
                             render={({ field }) => (
-                              <FormItem>
+                              <FormItem className="!mt-0">
                                 <FormLabel>CEP</FormLabel>
                                 <FormControl>
                                   <Input disabled={isPending} {...field} placeholder="00000-000" />
@@ -361,7 +361,7 @@ const AccountPage = () => {
                             />
                           </div>
 
-                          <div className="grid grid-cols-12 gap-4">
+                          <div className="flex flex-col xs:grid xs:grid-cols-12 gap-4">
                             <FormField
                               control={form.control}
                               name="address.neighborhood"

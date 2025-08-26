@@ -66,7 +66,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
         <Card className="min-w-full">
           <CardContent className="flex items-center p-0">
             <div className="flex flex-col gap-2 p-5 flex-1 md:flex-[3]">
-              <Badge variant={isBookingConfirmed ? 'default' : 'secondary'} className="w-fit">
+              <Badge variant={isBookingConfirmed ? 'success' : 'secondary'} className="w-fit">
                 {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
               </Badge>
 
@@ -120,7 +120,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             </div>
           </div>
 
-          <Badge variant={isBookingConfirmed ? 'default' : 'secondary'} className="w-fit mt-5 mb-3">
+          <Badge variant={isBookingConfirmed ? 'success' : 'secondary'} className="w-fit mt-5 mb-3">
             {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
           </Badge>
 

@@ -32,7 +32,7 @@ const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
   const [isBooking, setIsBooking] = useState(false);
 
   useEffect(() => {
-    if (actualRoute.includes('booking')) {
+    if (actualRoute.includes('booking') || actualRoute.includes('/')) {
       setIsBooking(true);
     }
   }, [actualRoute]);

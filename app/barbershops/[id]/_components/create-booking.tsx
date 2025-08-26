@@ -24,7 +24,7 @@ import BookingInfo from '@/app/_components/booking-info';
 import { Avatar, AvatarFallback, AvatarImage } from '@/app/_components/ui/avatar';
 import { FaUser } from 'react-icons/fa';
 interface Barbershop extends PrismaBarbershop {
-  barbers?: { id: string; name: string; image: string | null; barbershopId: string }[];
+  barbers?: Barber[];
   services: Service[];
   workHours: WorkHour[];
 }
