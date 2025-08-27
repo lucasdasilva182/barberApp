@@ -5,13 +5,7 @@ import BookingItem from '../_components/booking-item';
 import { db } from '../_lib/prisma';
 import BarbershopItem from './_components/barbershop-item';
 import { currentUser } from '@/app/_lib/auth';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/app/_components/ui/carousel';
+import { CarouselItem } from '@/app/_components/ui/carousel';
 import { FlexibleCarousel } from '../_components/carousel-item';
 import { Barbershop } from '@prisma/client';
 
@@ -32,6 +26,16 @@ export default async function Home() {
             date: {
               gte: new Date(),
             },
+            OR: [
+              {
+                status: null,
+              },
+              {
+                status: {
+                  not: 'CANCELLED',
+                },
+              },
+            ],
           },
           include: {
             bookingServices: true,
@@ -43,7 +47,6 @@ export default async function Home() {
   ]);
 
   const renderBarbershopItem = (barbershop: Barbershop) => {
-    // Replace BarbershopType with your actual type
     return <BarbershopItem barbershop={barbershop} />;
   };
   return (

@@ -17,6 +17,16 @@ const BookingsPage = async () => {
         date: {
           gte: new Date(),
         },
+        OR: [
+          {
+            status: null,
+          },
+          {
+            status: {
+              not: 'CANCELLED',
+            },
+          },
+        ],
       },
       include: {
         bookingServices: true,
@@ -27,9 +37,16 @@ const BookingsPage = async () => {
     db.booking.findMany({
       where: {
         userId: (user as any).id,
-        date: {
-          lt: new Date(),
-        },
+        OR: [
+          {
+            date: {
+              lt: new Date(),
+            },
+          },
+          {
+            status: 'CANCELLED',
+          },
+        ],
       },
       include: {
         bookingServices: true,
@@ -46,7 +63,7 @@ const BookingsPage = async () => {
 
         {confirmedBookings.length == 0 && (
           <div className="flex w-full">
-            <h2 className="text-gray-400 uppercase font-bold text-sm mt-6 mb-3">
+            <h2 className="text-gray-400 font-semibold text-sm mt-6 mb-3">
               Nenhum agendamento encontrado.
             </h2>
           </div>
