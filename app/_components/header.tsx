@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import SideMenu from './side-menu';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import Search from '../(home)/_components/search';
+import Search from './search';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { useEffect, useState } from 'react';
 

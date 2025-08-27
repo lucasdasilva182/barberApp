@@ -35,7 +35,7 @@ const Search = ({ defaultValues, customClass }: SearchProps) => {
   };
 
   return (
-    <div className={`flex items-center gap-2 ${customClass}`}>
+    <div className={`flex items-center gap-2 min-w-80 ${customClass}`}>
       <Form {...form}>
         <form className="flex w-full gap-4" onSubmit={form.handleSubmit(handleSubmit)}>
           <FormField
@@ -44,15 +44,21 @@ const Search = ({ defaultValues, customClass }: SearchProps) => {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormControl>
-                  <Input placeholder="Busque por uma barbearia" {...field} />
+                  <div className="flex w-full gap-2 relative">
+                    <Input placeholder="Busque por uma barbearia" {...field} />
+                    <Button
+                      variant="ghost"
+                      type="submit"
+                      className="absolute right-0 top-1/2 -translate-y-1/2 hover:bg-transparent"
+                    >
+                      <SearchIcon size={20} />
+                    </Button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button variant="default" type="submit">
-            <SearchIcon size={20} />
-          </Button>
         </form>
       </Form>
     </div>

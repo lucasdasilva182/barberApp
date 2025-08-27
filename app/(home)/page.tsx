@@ -1,6 +1,6 @@
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
-import Search from './_components/search';
+import Search from '../_components/search';
 import BookingItem from '../_components/booking-item';
 import { db } from '../_lib/prisma';
 import BarbershopItem from './_components/barbershop-item';
@@ -46,9 +46,6 @@ export default async function Home() {
       : Promise.resolve([]),
   ]);
 
-  const renderBarbershopItem = (barbershop: Barbershop) => {
-    return <BarbershopItem barbershop={barbershop} />;
-  };
   return (
     <>
       <div className="container px-5 py-6 pt-20">
