@@ -92,7 +92,9 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
           locale: ptBR,
         }),
       });
-      router.push('/account/bookings');
+      setTimeout(() => {
+        router.push('/account/bookings');
+      }, 500);
     } catch (error) {
       console.error(error);
     } finally {
@@ -238,17 +240,22 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
                   <p className="text-sm text-gray-500">Nenhum horário disponível</p>
                 )}
               </div>
-              <Button
-                onClick={() => {
-                  const container = document.getElementById('time-scroll-container');
-                  if (container) {
-                    container.scrollBy({ left: 200, behavior: 'smooth' });
-                  }
-                }}
-                className="bg-accent hover:bg-accent border-0  z-10 p-2 rounded-full h-auto"
-              >
-                <ChevronRight size={16} />
-              </Button>
+
+              {timeList.length > 1 && (
+                <>
+                  <Button
+                    onClick={() => {
+                      const container = document.getElementById('time-scroll-container');
+                      if (container) {
+                        container.scrollBy({ left: 200, behavior: 'smooth' });
+                      }
+                    }}
+                    className="bg-accent hover:bg-accent border-0  z-10 p-2 rounded-full h-auto"
+                  >
+                    <ChevronRight size={16} />
+                  </Button>
+                </>
+              )}
             </div>
           )}
 

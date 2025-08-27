@@ -60,15 +60,22 @@ const BookingItem = ({ booking }: BookingItemProps) => {
       setIsDeleteLoading(false);
     }
   };
+
   return (
     <Sheet>
       <SheetTrigger asChild className="cursor-pointer">
         <Card className="min-w-full">
           <CardContent className="flex items-center p-0">
             <div className="flex flex-col gap-2 p-5 flex-1 md:flex-[3]">
-              <Badge variant={isBookingConfirmed ? 'success' : 'secondary'} className="w-fit">
-                {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
-              </Badge>
+              {booking.status === 'CANCELLED' ? (
+                <Badge variant="destructive" className="w-fit">
+                  Cancelado
+                </Badge>
+              ) : (
+                <Badge variant={isBookingConfirmed ? 'success' : 'secondary'} className="w-fit">
+                  {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
+                </Badge>
+              )}
 
               <div className="flex items-center gap-2">
                 <Avatar className="h-6 w-6">
@@ -120,9 +127,18 @@ const BookingItem = ({ booking }: BookingItemProps) => {
             </div>
           </div>
 
-          <Badge variant={isBookingConfirmed ? 'success' : 'secondary'} className="w-fit mt-5 mb-3">
-            {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
-          </Badge>
+          {booking.status === 'CANCELLED' ? (
+            <Badge variant="destructive" className="w-fit mt-5 mb-3">
+              Cancelado
+            </Badge>
+          ) : (
+            <Badge
+              variant={isBookingConfirmed ? 'success' : 'secondary'}
+              className="w-fit mt-5 mb-3"
+            >
+              {isBookingConfirmed ? 'Confirmado' : 'Finalizado'}
+            </Badge>
+          )}
 
           <BookingInfo
             booking={{
@@ -146,7 +162,7 @@ const BookingItem = ({ booking }: BookingItemProps) => {
                 Voltar
               </Button>
             </SheetClose>
-            {isBookingConfirmed && (
+            {isBookingConfirmed && booking.status !== 'CANCELLED' && (
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button className="w-full" variant="destructive">
