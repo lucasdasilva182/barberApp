@@ -105,6 +105,14 @@ model Booking {
   barbershop      Barbershop @relation(fields: [barbershopId], references: [id])
   bookingServices BookingService[]
   date            DateTime
+  status          BookingStatus? 
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
 }
 
 model BookingService {
@@ -112,7 +120,7 @@ model BookingService {
   serviceId       String
   service         Service @relation(fields: [serviceId], references: [id])
   bookingId       String
-  booking         Booking @relation(fields: [bookingId], references: [id])
+  booking         Booking @relation(fields: [bookingId], references: [id], onDelete: Cascade)
   price           Decimal    @db.Decimal(10, 2)
   name            String?
 }
