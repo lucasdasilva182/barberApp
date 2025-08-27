@@ -1,6 +1,6 @@
 'use client';
 
-import SideMenu from '@/app/_components/side-menu';
+import SideMenu from '@/app/_components/side-menu-items';
 import { Button } from '@/app/_components/ui/button';
 import { Sheet, SheetTrigger, SheetContent } from '@/app/_components/ui/sheet';
 import { Barbershop } from '@prisma/client';

@@ -15,6 +15,7 @@ import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import SideMenuItems from './side-menu-items';
 
 export function AppSidebar() {
   const pathname = usePathname();
@@ -64,7 +65,7 @@ export function AppSidebar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu className="mt-2">
-              {items.map((item) => (
+              {/* {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
                     asChild
@@ -83,7 +84,9 @@ export function AppSidebar() {
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              ))}
+              ))} */}
+
+              <SideMenuItems />
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
