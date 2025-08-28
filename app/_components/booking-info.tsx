@@ -5,8 +5,6 @@ import { Card, CardContent } from './ui/card';
 import { Button } from './ui/button';
 import { Pencil } from 'lucide-react';
 import { Separator } from './ui/separator';
-import { usePathname } from 'next/navigation';
-import { useEffect, useState } from 'react';
 import { Decimal } from '@prisma/client/runtime/library';
 
 interface BookingService {
@@ -25,18 +23,10 @@ interface BookingInfoProps {
     bookingServices: BookingService[];
   };
   onOpenBarberSheet?: () => void;
+  isBooking?: boolean;
 }
 
-const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
-  const actualRoute = usePathname();
-  const [isBooking, setIsBooking] = useState(false);
-
-  useEffect(() => {
-    if (actualRoute.includes('booking') || actualRoute.includes('/')) {
-      setIsBooking(true);
-    }
-  }, [actualRoute]);
-
+const BookingInfo = ({ booking, onOpenBarberSheet, isBooking = false }: BookingInfoProps) => {
   return (
     <Card>
       <CardContent className="p-3 flex flex-col gap-3">
@@ -99,7 +89,7 @@ const BookingInfo = ({ booking, onOpenBarberSheet }: BookingInfoProps) => {
                   {booking.barber ? booking.barber.name : 'Sem preferência'}
                 </h4>
               </div>
-              {!isBooking && (
+              {isBooking && (
                 <>
                   <Button
                     variant="ghost"

@@ -29,9 +29,9 @@ const BarbershopsPage = async ({ searchParams }: BarbershopsPageProps) => {
           Resultados para &quot;{searchParams.search}&quot;
         </h1>
 
-        <div className="flex gap-4">
+        <div className="flex flex-wrap gap-4">
           {barbershops.map((barbershop) => (
-            <div className="min-w-[167px] max-w-[167px]" key={barbershop.id}>
+            <div className="basis-1/2 md:basis-1/4 lg:basis-1/6" key={barbershop.id}>
               <BarbershopItem barbershop={barbershop} />
             </div>
           ))}

@@ -274,6 +274,7 @@ const CreateBooking = ({ selectedServices, isAuthenticated, barbershop }: Create
                 bookingServices: selectedServices,
               }}
               onOpenBarberSheet={openBarberSheet}
+              isBooking={true}
             />
           </div>
 
